@@ -1,0 +1,36 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - find_toy
+  - ask_price
+  - ask_description
+  - reserve_toy
+  - show_cart
+  - ask_profile
+
+entities:
+  - toy_name
+  - date
+
+slots:
+  toy_name:
+    type: text
+  date:
+    type: text
+
+responses:
+  utter_greet:
+    - text: "Hi! 🧸 Welcome to TwinkleBee ToyLand! What toy are you looking for today?"
+  
+  utter_goodbye:
+    - text: "Bye! Come back soon for more fun toys! 🐝"
+
+  utter_find_toy:
+    - text: "I found some magical toys for you! Check them out in the shop 🧸"
+
+  utter_ask_date:
+    - text: "When would you like to reserve your toy? 📅"
+
+  utter_confirm_reservati

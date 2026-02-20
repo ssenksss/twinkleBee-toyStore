@@ -1,0 +1,47 @@
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 1rem;
+    font-family: 'Segoe UI', sans-serif;
+    background: #fffafc;
+    min-height: 100vh;
+  }
+  body.dark {
+    background: #121212;
+    color: white;
+  }
+
+  body.dark .card {
+    background: #1e1e1e;
+    color: white;
+  }
+
+  body.dark .nav {
+    background: #333;
+  }
+  @media (max-width: 600px) {
+    .nav {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  button, a {
+    transition: transform 0.2s ease;
+  }
+
+  button:hover, a:hover {
+    transform: scale(1.05);
+  }

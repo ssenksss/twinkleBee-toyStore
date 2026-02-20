@@ -1,0 +1,36 @@
+<div class="admin-layout">
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      TwinkleBee Admin
+    </div>
+
+    <nav>
+      <a routerLink="dashboard" routerLinkActive="active">
+        <span></span> Dashboard
+      </a>
+
+      <a routerLink="products" routerLinkActive="active">
+        <span></span> Products
+      </a>
+
+      <a routerLink="users" routerLinkActive="active">
+        <span></span> Users
+      </a>
+    </nav>
+
+
+    <div class="logout-box">
+      <button (click)="logout()">
+         Logout
+      </button>
+    </div>
+
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

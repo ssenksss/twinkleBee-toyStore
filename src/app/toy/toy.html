@@ -1,0 +1,130 @@
+<div class="toy-page fade-in">
+
+
+  <nav class="breadcrumb">
+    <a routerLink="/shop">Shop</a>
+    <span>›</span>
+    <span>{{ toy.type.label }}</span>
+    <span>›</span>
+    <strong>{{ toy.name }}</strong>
+  </nav>
+
+
+  <div class="toy-layout">
+
+
+    <div class="toy-image">
+      <img [src]="toy.image" alt="toy" />
+      <span class="category-badge">{{ toy.type.label }}</span>
+    </div>
+
+
+    <div class="toy-info">
+      <h1>{{ toy.name }}</h1>
+
+      <div class="meta">
+        <span class="rating">⭐ {{ toy.reviews.length }} reviews</span>
+        <span class="dot">•</span>
+        <span>{{ toy.ageMin }}–{{ toy.ageMax }} god.</span>
+      </div>
+
+      <div class="price">
+        {{ toy.price | currency:'RSD':'symbol':'1.0-0' }}
+      </div>
+
+      <p class="description">
+        {{ toy.description }}
+      </p>
+
+
+      <div class="specs">
+        <div class="spec">
+          <span class="k">Tip</span>
+          <span class="v">{{ toy.type.label }}</span>
+        </div>
+
+        <div class="spec">
+          <span class="k">Uzrast</span>
+          <span class="v">{{ toy.ageMin }}–{{ toy.ageMax }} god.</span>
+        </div>
+
+        <div class="spec">
+          <span class="k">Ciljna grupa</span>
+          <span class="v">{{ targetGroupLabel(toy.targetGroup) }}</span>
+        </div>
+
+        <div class="spec">
+          <span class="k">Datum proizvodnje</span>
+          <span class="v">{{ toy.manufactureDate | date:'dd.MM.yyyy' }}</span>
+        </div>
+      </div>
+
+
+      <div class="controls">
+        <div class="quantity">
+          <button (click)="quantity = quantity - 1" [disabled]="quantity <= 1">−</button>
+          <input type="number" [(ngModel)]="quantity" min="1" />
+          <button (click)="quantity = quantity + 1">+</button>
+        </div>
+
+        <button class="btn btn-primary add-btn" (click)="addToCart()">
+          Add to Cart
+        </button>
+      </div>
+
+
+      <div class="reviews">
+        <div class="reviews-head">
+          <h3>Recenzije</h3>
+
+          <ng-container *ngIf="avgRating(toy) as r; else noRating">
+            <div class="reviews-summary">
+              <span class="stars">{{ stars(r) }}</span>
+              <span class="num">{{ r }}/5</span>
+              <span class="count">({{ toy.reviews.length }} recenzija)</span>
+            </div>
+          </ng-container>
+
+          <ng-template #noRating>
+            <div class="reviews-summary">
+              <span class="count">Još uvek nema recenzija.</span>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="review-list" *ngIf="toy.reviews.length > 0">
+          <div class="review" *ngFor="let r of toy.reviews">
+            <div class="review-top">
+              <span class="badge">{{ r.authorType === 'dete' ? 'Dete' : 'Roditelj' }}</span>
+              <span class="stars">{{ stars(r.rating) }}</span>
+              <span class="date">{{ r.date | date:'dd.MM.yyyy' }}</span>
+            </div>
+            <p class="review-text">{{ r.text }}</p>
+          </div>
+        </div>
+      </div>
+
+
+      <ul class="features">
+        <li>Bezbedno za decu</li>
+        <li>Za uzrast {{ toy.ageMin }}+</li>
+        <li>Brza isporuka</li>
+      </ul>
+
+    </div>
+  </div>
+
+
+  <section class="related">
+    <h2 class="section-title">You may also like</h2>
+
+    <div class="grid-3">
+      <app-toy-card
+        *ngFor="let t of relatedToys"
+        [toy]="t"
+        class="related-card">
+      </app-toy-card>
+    </div>
+  </section>
+
+</div>

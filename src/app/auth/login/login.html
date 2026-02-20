@@ -1,0 +1,48 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+
+    <span class="badge">TwinkleBee Access</span>
+    <h2>Welcome Back 🐝</h2>
+    <p class="subtitle">Login to continue your toy adventure</p>
+
+    <div class="field">
+      <input type="email" placeholder="Email" [(ngModel)]="email">
+    </div>
+
+    <div class="field password-field">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        placeholder="Password"
+        [(ngModel)]="password"
+      >
+      <button class="toggle" (click)="showPassword = !showPassword">
+        {{ showPassword ? '🙈' : '👁️' }}
+      </button>
+    </div>
+
+    <button
+      type="button"
+      class="login-btn"
+      (click)="submit()"
+      [disabled]="loading"
+    >
+  <span class="btn-content">
+    <span class="spinner" *ngIf="loading"></span>
+    {{ loading ? 'Redirecting...' : 'Login' }}
+  </span>
+    </button>
+
+
+    <p class="error" *ngIf="error">
+      {{ error }}
+    </p>
+    <p class="success" *ngIf="success">
+      {{ success }}
+    </p>
+    <p class="link">
+      No account?
+      <a routerLink="/signup">Sign up</a>
+    </p>
+
+  </div>
+</div>

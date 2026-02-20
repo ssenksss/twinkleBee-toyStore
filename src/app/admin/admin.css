@@ -1,0 +1,145 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #fff7fb;
+  font-family: 'Poppins', 'Comic Neue', sans-serif;
+}
+
+
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #ff8fb1, #a78bfa);
+  color: white;
+  padding: 2.5rem 2rem;
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
+  box-shadow: 8px 0 25px rgba(255, 143, 177, 0.4);
+}
+
+
+.logo {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  text-align: center;
+  text-shadow: 0 4px 0 #ffd166;
+}
+
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.15);
+  transition: all 0.25s ease;
+}
+
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+  background: white;
+  color: #ff8fb1;
+  transform: translateX(8px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+
+.sidebar nav a span {
+  font-size: 1.4rem;
+}
+
+.content {
+  flex: 1;
+  padding: 3rem;
+  animation: fadeIn 0.5s ease;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logout-box {
+  margin-top: auto;
+  padding-top: 2rem;
+}
+
+.logout-box button {
+  width: 100%;
+  background: white;
+  color: #ff8fb1;
+  border: none;
+  padding: 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: all 0.25s ease;
+}
+
+.logout-box button:hover {
+  background: #ffd166;
+  color: #9a6b00;
+  transform: scale(1.05);
+}
+
+.sidebar,
+.sidebar nav a,
+.logout-box button {
+  transition: all 0.25s ease;
+}
+
+
+.sidebar nav a.active {
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar nav a.active::after {
+  content: '';
+  position: absolute;
+  left: -50%;
+  top: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+  animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+
+.logout-box button {
+  letter-spacing: 0.05em;
+}
+
+.logout-box button:hover {
+  box-shadow:
+    0 10px 25px rgba(255, 209, 102, 0.6),
+    0 0 0 3px rgba(255,255,255,0.7);
+}

@@ -1,0 +1,106 @@
+<div class="shop-page fade-in">
+
+
+  <div class="shop-header">
+    <div>
+      <h1>Shop Toys</h1>
+      <p>Find the perfect toy for every little hero</p>
+    </div>
+
+    <div class="results">
+      {{ filteredToys.length }} toys found
+    </div>
+  </div>
+
+  <div class="shop-layout">
+
+
+    <aside class="sidebar">
+      <h2>Filters</h2>
+
+      <div class="filter-block">
+        <label class="label">Naziv</label>
+        <input type="text" placeholder="npr. Teddy" [(ngModel)]="f.name" class="search-input" />
+      </div>
+
+      <div class="filter-block">
+        <label class="label">Opis</label>
+        <input type="text" placeholder="npr. mekana" [(ngModel)]="f.description" class="search-input" />
+      </div>
+
+      <div class="filter-block">
+        <label class="label">Tip</label>
+        <select class="select" [(ngModel)]="f.typeId">
+          <option [ngValue]="'all'">Svi tipovi</option>
+          <option *ngFor="let t of types" [ngValue]="t.id">{{ t.label }}</option>
+        </select>
+      </div>
+
+      <div class="filter-block">
+        <label class="label">Ciljna grupa</label>
+        <select class="select" [(ngModel)]="f.targetGroup">
+          <option [ngValue]="'all'">Sve</option>
+          <option [ngValue]="'devojcica'">Devojčica</option>
+          <option [ngValue]="'decak'">Dečak</option>
+          <option [ngValue]="'svi'">Svi</option>
+        </select>
+      </div>
+
+      <div class="filter-block">
+        <label class="label">Uzrast (godine)</label>
+        <input type="number" min="0" placeholder="npr. 6" [(ngModel)]="f.age" class="search-input" />
+      </div>
+
+      <div class="filter-block">
+        <label class="label">Datum proizvodnje</label>
+        <div class="row-2">
+          <input type="date" [(ngModel)]="f.manufacturedFrom" class="search-input" />
+          <input type="date" [(ngModel)]="f.manufacturedTo" class="search-input" />
+        </div>
+      </div>
+
+      <div class="filter-block">
+        <label class="label">Cena (RSD)</label>
+        <div class="row-2">
+          <input type="number" min="0" placeholder="min" [(ngModel)]="f.priceMin" class="search-input" />
+          <input type="number" min="0" placeholder="max" [(ngModel)]="f.priceMax" class="search-input" />
+        </div>
+      </div>
+
+      <div class="filter-block">
+        <label class="label">Recenzije (sadrže tekst)</label>
+        <input type="text" placeholder="npr. kvalitet" [(ngModel)]="f.reviewText" class="search-input" />
+      </div>
+
+      <div class="filter-block">
+        <label class="label">Minimalna ocena u recenzijama</label>
+        <select class="select" [(ngModel)]="f.minReviewRating">
+          <option [ngValue]="'all'">Bilo koja</option>
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="4">4+</option>
+          <option [ngValue]="3">3+</option>
+          <option [ngValue]="2">2+</option>
+          <option [ngValue]="1">1+</option>
+        </select>
+      </div>
+
+      <button class="clear-btn" (click)="clearFilters()">Clear filters</button>
+    </aside>
+
+    <section class="products">
+      <div class="grid-3">
+        <app-toy-card
+          *ngFor="let toy of filteredToys"
+          [toy]="toy">
+        </app-toy-card>
+      </div>
+
+      <div class="empty-state" *ngIf="filteredToys.length === 0">
+        <h3>No toys found 🧸</h3>
+        <p>Try changing your filters</p>
+      </div>
+    </section>
+
+  </div>
+
+</div>

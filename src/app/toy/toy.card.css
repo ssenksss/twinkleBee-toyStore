@@ -1,0 +1,164 @@
+
+.toy-card {
+  background: white;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.toy-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(255, 183, 3, 0.25);
+}
+
+
+.image-wrap {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(135deg, #ffe4f1, #fff4da);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+
+.image-wrap img {
+  max-width: 85%;
+  max-height: 85%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.toy-card:hover .image-wrap img {
+  transform: scale(1.06);
+}
+
+
+.category-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(90deg, #ff5fa2, #ffb703);
+  color: white;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 14px rgba(255, 183, 3, 0.4);
+}
+
+
+.toy-content {
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+
+.toy-content h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+
+.price {
+  font-size: 1.3rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #ff5fa2, #ffb703);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1.25rem;
+}
+
+
+.view-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  border-radius: 999px;
+  padding: 0.65rem 1.8rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: #111827;
+  transition: all 0.15s ease;
+}
+
+
+.view-btn:hover {
+  background: #fff1db;
+  color: #ff5fa2;
+  transform: scale(1.05);
+}
+
+
+.toy-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 183, 3, 0.12);
+  pointer-events: none;
+}
+
+
+.toy-card {
+  animation: cardFade 0.25s ease both;
+}
+
+@keyframes cardFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.65rem;
+}
+
+.meta .dot {
+  opacity: 0.6;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.rating .stars {
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+}
+
+.rating .small {
+  font-size: 0.8rem;
+  color: #6b7280;
+}

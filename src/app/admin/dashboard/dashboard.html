@@ -1,0 +1,51 @@
+<div class="dashboard">
+
+  <div class="header">
+    <div>
+      <h1>Dashboard</h1>
+      <p>Store overview and performance metrics</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <span class="label">Users</span>
+      <h2>{{ usersCount }}</h2>
+      <span class="trend up">+12% this month</span>
+    </div>
+
+    <div class="stat-card">
+      <span class="label">Products</span>
+      <h2>{{ productsCount }}</h2>
+      <span class="trend neutral">Inventory stable</span>
+    </div>
+
+    <div class="stat-card">
+      <span class="label">Orders</span>
+      <h2>{{ ordersCount }}</h2>
+      <span class="trend up">+8% this week</span>
+    </div>
+
+    <div class="stat-card">
+      <span class="label">Revenue</span>
+      <h2>${{ revenue }}</h2>
+      <span class="trend up">+15% growth</span>
+    </div>
+  </div>
+
+  <div class="chart-section">
+    <div class="chart-header">
+      <h3>Weekly Activity</h3>
+      <span class="chart-subtitle">Orders per day</span>
+    </div>
+
+    <div class="chart">
+      <div
+        class="bar"
+        *ngFor="let value of [35, 60, 45, 80, 55, 75, 50]"
+        [style.height.%]="value"
+      ></div>
+    </div>
+  </div>
+
+</div>

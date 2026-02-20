@@ -1,0 +1,164 @@
+<div class="cart-page fade-in">
+
+  <div class="cart-header">
+    <div>
+      <h1>Your Cart</h1>
+      <p>Rezervacije i status porudžbine</p>
+    </div>
+
+    <div class="cart-count">
+      {{ cartItems.length }} items
+    </div>
+  </div>
+
+  <div class="cart-layout">
+
+    <section class="cart-items">
+
+      <div *ngIf="notice" class="notice">
+        {{ notice }}
+      </div>
+
+      <div *ngIf="cartItems.length === 0" class="empty">
+        <h3>Your cart is empty 🛒</h3>
+        <p>Dodaj igračku iz Shop-a</p>
+        <a routerLink="/shop" class="btn btn-primary">Browse Toys</a>
+      </div>
+
+      <div class="cart-row" *ngFor="let item of cartItems">
+
+        <div class="product">
+          <img [src]="item.image" />
+          <div class="info">
+            <div class="titleRow">
+              <h3>{{ item.name }}</h3>
+
+              <span
+                class="badge"
+                [class.b-res]="item.status === 'rezervisano'"
+                [class.b-arr]="item.status === 'pristiglo'"
+                [class.b-can]="item.status === 'otkazano'"
+              >
+                {{ statusLabel(item.status) }}
+              </span>
+            </div>
+
+            <p>{{ item.price | currency:'RSD':'symbol':'1.0-0' }}</p>
+
+            <div class="mini">
+              <span class="tag">{{ item.type.label }}</span>
+              <span class="tag">{{ item.ageMin }}–{{ item.ageMax }} god.</span>
+              <span class="tag">Grupa: {{ item.targetGroup }}</span>
+              <span class="tag">Proizv.: {{ item.manufactureDate | date:'dd.MM.yyyy' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="status">
+          <label>Status</label>
+          <select
+            [ngModel]="item.status"
+            (ngModelChange)="onStatusChange(item, $event)"
+          >
+            <option *ngFor="let s of statuses" [ngValue]="s.value">{{ s.label }}</option>
+          </select>
+          <div class="micro">
+            Menjanje količine: samo “rezervisano”. Brisanje/ocena: samo “pristiglo”.
+          </div>
+        </div>
+
+        <div class="quantity" [class.disabled]="item.status !== 'rezervisano'">
+          <button (click)="decrease(item)" [disabled]="item.status !== 'rezervisano'">−</button>
+
+          <input
+            type="number"
+            min="1"
+            [(ngModel)]="item.quantity"
+            (ngModelChange)="onQuantityInput(item)"
+            [disabled]="item.status !== 'rezervisano'"
+          />
+
+          <button (click)="increase(item)" [disabled]="item.status !== 'rezervisano'">+</button>
+        </div>
+
+        <div class="subtotal">
+          {{ item.price * item.quantity | currency:'RSD':'symbol':'1.0-0' }}
+        </div>
+
+        <div class="ratingBox" [class.dim]="item.status !== 'pristiglo'">
+          <label>Oceni</label>
+
+          <div class="starsRow">
+            <button
+              class="starBtn"
+              *ngFor="let r of [1,2,3,4,5]"
+              (click)="setRating(item, r)"
+              [disabled]="item.status !== 'pristiglo'"
+              [class.active]="(item.userRating || 0) >= r"
+              title="Rate"
+            >
+              ★
+            </button>
+          </div>
+
+          <div class="small">
+            <ng-container *ngIf="item.userRating; else notRated">
+              {{ stars(item.userRating) }} ({{ item.userRating }}/5)
+            </ng-container>
+            <ng-template #notRated>
+              Nije ocenjeno
+            </ng-template>
+          </div>
+        </div>
+
+        <button
+          class="remove"
+          (click)="remove(item)"
+          [disabled]="item.status !== 'pristiglo'"
+          [class.dimBtn]="item.status !== 'pristiglo'"
+          title="Remove item"
+        >
+          ✖
+        </button>
+      </div>
+    </section>
+
+    <aside class="summary">
+      <h2>Order Summary</h2>
+
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <strong>{{ total | currency:'RSD':'symbol':'1.0-0' }}</strong>
+      </div>
+
+      <div class="summary-row muted">
+        <span>Shipping</span>
+        <span>Free</span>
+      </div>
+
+      <div class="summary-total">
+        <span>Total</span>
+        <strong>{{ total | currency:'RSD':'symbol':'1.0-0' }}</strong>
+      </div>
+
+      <a
+        routerLink="/checkout"
+        class="btn btn-primary checkout-btn"
+        [class.disabledLink]="!canCheckout()"
+        [attr.aria-disabled]="!canCheckout()"
+      >
+        Proceed to Checkout
+      </a>
+
+      <p class="secure">
+        🔒 Secure checkout · SSL protected
+      </p>
+
+      <p class="hint">
+        * Checkout ima smisla samo ako postoji bar jedna stavka u statusu <b>rezervisano</b>.
+      </p>
+    </aside>
+
+  </div>
+
+</div>

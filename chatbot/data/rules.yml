@@ -1,0 +1,23 @@
+version: '3.1'
+version: "3.1"
+
+rules:
+- rule: Greet the user
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Find a toy
+  steps:
+  - intent: find_toy
+  - action: action_find_toy
+
+- rule: Reserve a toy
+  steps:
+  - intent: reserve_toy
+  - action: action_reserve_toy

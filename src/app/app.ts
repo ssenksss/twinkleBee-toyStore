@@ -1,12 +1,21 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import {RouterModule, RouterOutlet} from '@angular/router';
+
+import { NavbarComponent } from './components/navbar/navbar';
+import { ChatbotComponent } from './components/chatbot/chatbot';
+import { ToastComponent } from './components/toast/toast';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  standalone: true,
+  imports: [
+    RouterModule,
+    NavbarComponent,
+    ChatbotComponent,
+    RouterOutlet,
+    ToastComponent
+
+  ],
+  templateUrl: './app.html'
 })
-export class App {
-  protected readonly title = signal('twinklebee-app');
-}
+export class AppComponent {}

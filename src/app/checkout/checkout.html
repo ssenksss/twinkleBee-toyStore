@@ -1,0 +1,128 @@
+<div class="checkout-page fade-in">
+
+  <div class="checkout-header">
+    <div>
+      <h1>Checkout</h1>
+      <p>Potvrdi rezervaciju i unesi podatke za isporuku</p>
+    </div>
+
+    <button class="back-link" (click)="goBack()">← Back to cart</button>
+  </div>
+
+  <div class="checkout-layout">
+
+    <section class="panel">
+      <h2>Delivery info</h2>
+
+      <div class="form-row">
+        <label>Full name *</label>
+        <input
+          [(ngModel)]="fullName"
+          (blur)="touched.fullName = true"
+          placeholder="Ime i prezime"
+        />
+        <div class="field-error" *ngIf="fullNameError()">{{ fullNameError() }}</div>
+      </div>
+
+      <div class="form-row">
+        <label>Email</label>
+        <input [value]="email" disabled />
+        <div class="micro">Email se preuzima iz profila (login).</div>
+      </div>
+
+      <div class="form-row">
+        <label>Phone *</label>
+        <input
+          [(ngModel)]="phone"
+          (blur)="touched.phone = true"
+          placeholder="+381 64 123 456"
+        />
+        <div class="field-error" *ngIf="phoneError()">{{ phoneError() }}</div>
+      </div>
+
+      <div class="form-row">
+        <label>Address *</label>
+        <input
+          [(ngModel)]="address"
+          (blur)="touched.address = true"
+          placeholder="Ulica i broj, grad"
+        />
+        <div class="field-error" *ngIf="addressError()">{{ addressError() }}</div>
+      </div>
+
+      <div class="form-row">
+        <label>Note (optional)</label>
+        <textarea [(ngModel)]="note" rows="3" placeholder="Napomena za isporuku..."></textarea>
+      </div>
+
+      <div class="divider"></div>
+
+      <h2>Simulation</h2>
+      <div class="radio-grid">
+        <label class="radio">
+          <input type="radio" name="outcome" [(ngModel)]="outcome" value="allArrived" />
+          <div>
+            <div class="radio-title">Sve pristiglo</div>
+            <div class="radio-sub">Checkout menja sve rezervacije u status <b>pristiglo</b>.</div>
+          </div>
+        </label>
+
+        <label class="radio">
+          <input type="radio" name="outcome" [(ngModel)]="outcome" value="someCanceled" />
+          <div>
+            <div class="radio-title">Delimično otkazano</div>
+            <div class="radio-sub">Neke stavke postaju <b>otkazano</b> (da se vide sva 3 statusa).</div>
+          </div>
+        </label>
+      </div>
+
+      <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+      <p class="success" *ngIf="successMsg">{{ successMsg }}</p>
+
+      <button class="btn btn-primary" (click)="confirmOrder()" [disabled]="!canSubmit()">
+        Confirm order
+      </button>
+
+      <p class="tiny">
+        * Ovo je prototip: potvrda menja statuse stavki u korpi. Nakon toga idi u korpu da vidiš badge-eve,
+        i za <b>pristiglo</b> možeš oceniti i obrisati.
+      </p>
+    </section>
+
+    <aside class="panel summary">
+      <h2>Summary</h2>
+
+      <div *ngIf="items.length === 0" class="empty">
+        <h3>Nema rezervisanih proizvoda</h3>
+        <p>Checkout radi samo za stavke u statusu <b>rezervisano</b>.</p>
+        <a routerLink="/shop" class="btn btn-secondary">Go to shop</a>
+      </div>
+
+      <div *ngIf="items.length > 0" class="summary-list">
+        <div class="sum-row" *ngFor="let i of items">
+          <div class="left">
+            <div class="name">{{ i.name }}</div>
+            <div class="meta">{{ i.quantity }} × {{ i.price | currency:'RSD':'symbol':'1.0-0' }}</div>
+          </div>
+          <div class="right">
+            {{ (i.quantity * i.price) | currency:'RSD':'symbol':'1.0-0' }}
+          </div>
+        </div>
+
+        <div class="sum-total">
+          <span>Total</span>
+          <strong>{{ total | currency:'RSD':'symbol':'1.0-0' }}</strong>
+        </div>
+
+        <div class="hint-box">
+          <div class="hint-title">Pravila teme</div>
+          <ul>
+            <li>Menjanje količine: samo kad je status <b>rezervisano</b>.</li>
+            <li>Ocenjivanje i brisanje: samo kad je status <b>pristiglo</b>.</li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>

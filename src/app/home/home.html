@@ -1,0 +1,75 @@
+<div class="home-page fade-in">
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <span class="badge">TwinkleBee ToyLand</span>
+
+          <h1>
+            Magical Toys for
+            <span>Curious Minds</span>
+          </h1>
+
+          <p>
+            Discover toys that inspire creativity, learning, and endless fun.
+            Powered by smart search and our friendly AI Bee.
+          </p>
+
+          <div class="hero-actions">
+            <button class="primary" routerLink="/shop">
+              Shop Now
+            </button>
+
+            <button class="secondary" routerLink="/about">
+              Learn More
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img src="assets/hero-toy.png" alt="Toys" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Featured Toys</h2>
+
+      <div class="grid-3">
+        <div class="toy-card" *ngFor="let toy of featuredToys">
+          <img [src]="toy.image" alt="toy" />
+
+          <div class="toy-info">
+            <h3>{{ toy.name }}</h3>
+            <p class="price">{{ toy.price | currency }}</p>
+
+            <button (click)="goToToy(toy.id)">
+              View Toy
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="promo">
+      <div class="promo-box">
+        <h2>Limited Time Offer 🎉</h2>
+        <p>Save up to 30% on selected toys this week only</p>
+
+        <button routerLink="/shop">
+          Browse Deals
+        </button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Shop by Category</h2>
+
+      <div class="grid-3">
+        <div class="category-card" *ngFor="let cat of categories">
+          <span>{{ cat }}</span>
+        </div>
+      </div>
+    </section>
+
+  </div>

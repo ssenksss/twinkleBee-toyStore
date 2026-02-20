@@ -1,0 +1,49 @@
+version: '3.1'
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hi
+    - hello
+    - hey
+    - hey there
+
+- intent: goodbye
+  examples: |
+    - bye
+    - see you
+    - goodbye
+
+- intent: find_toy
+  examples: |
+    - I want a teddy bear
+    - show me toy cars
+    - do you have dolls?
+
+- intent: ask_price
+  examples: |
+    - How much is the [Teddy Bear](toy_name)?
+    - Price of [Toy Car](toy_name)?
+
+- intent: ask_description
+  examples: |
+    - Tell me about the [Teddy Bear](toy_name)
+    - Describe [Toy Car](toy_name)
+
+- intent: reserve_toy
+  examples: |
+    - I want to reserve the [Teddy Bear](toy_name) on [2026-01-26](date)
+    - Book [Toy Car](toy_name) for [tomorrow](date)
+
+- intent: show_cart
+  examples: |
+    - show my cart
+    - what’s in my cart
+    - check cart
+
+- intent: ask_profile
+  examples: |
+    - show my profile
+    - who am I logged in as
+    - profile info

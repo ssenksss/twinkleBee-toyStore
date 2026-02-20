@@ -1,0 +1,61 @@
+<div class="profile-page">
+  <div class="profile-card" *ngIf="user">
+
+    <div class="avatar">
+      {{ user.firstName.charAt(0).toUpperCase() }}
+    </div>
+
+    <h2>My Profile</h2>
+    <p class="subtitle">
+      Welcome back, {{ user.firstName }} 🐝
+    </p>
+
+    <div class="info">
+      <p><strong>Email</strong> <span>{{ user.email }}</span></p>
+      <p><strong>Role</strong> <span>{{ user.role }}</span></p>
+    </div>
+
+    <div class="edit">
+      <div class="form-row">
+        <label>First name</label>
+        <input [(ngModel)]="firstName" />
+      </div>
+
+      <div class="form-row">
+        <label>Last name</label>
+        <input [(ngModel)]="lastName" />
+      </div>
+
+      <div class="form-row">
+        <label>Phone</label>
+        <input [(ngModel)]="phone" />
+      </div>
+
+      <div class="form-row">
+        <label>Address</label>
+        <input [(ngModel)]="address" />
+      </div>
+
+      <div class="form-row">
+        <label>Favorite toy types</label>
+
+        <div class="fav-grid">
+          <label *ngFor="let t of types" class="fav-item">
+            <input
+              type="checkbox"
+              [checked]="favoriteTypeIds.includes(t.id)"
+              (change)="toggleFavorite(t.id)"
+            />
+            <span>{{ t.label }}</span>
+          </label>
+        </div>
+      </div>
+
+      <button class="save-btn" (click)="saveProfile()">Save profile</button>
+      <span class="saved" *ngIf="savedMsg">{{ savedMsg }}</span>
+
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+
+  </div>
+</div>

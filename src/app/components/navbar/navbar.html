@@ -1,0 +1,88 @@
+<header class="navbar">
+  <div class="container nav-content">
+
+    <div class="logo" routerLink="/">
+      TwinkleBee
+    </div>
+
+    <nav class="nav-links">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Home
+      </a>
+
+      <a routerLink="/shop" routerLinkActive="active">
+        Shop
+      </a>
+
+      <a routerLink="/reserve" routerLinkActive="active">
+        Reservation
+      </a>
+
+      <a routerLink="/about" routerLinkActive="active">
+        About
+      </a>
+    </nav>
+
+<div class="nav-icons">
+
+  <a routerLink="/cart" class="cart-link">
+    Cart
+    <span
+      class="cart-badge"
+      *ngIf="cartCount > 0"
+      [class.bump]="animate"
+    >
+      {{ cartCount }}
+    </span>
+  </a>
+
+<a
+  *ngIf="!isLoggedIn"
+  routerLink="/login"
+  class="auth-btn login-btn"
+>
+  Login
+</a>
+
+<a
+  *ngIf="!isLoggedIn"
+  routerLink="/signup"
+  class="auth-btn create-btn"
+>
+  Create
+</a>
+
+
+  <a
+    *ngIf="isLoggedIn && !isAdmin"
+    routerLink="/profile"
+    class="profile-link"
+  >
+    Profile
+  </a>
+
+  <a
+    *ngIf="isAdmin"
+    routerLink="/admin"
+    class="admin-link"
+  >
+    Admin
+  </a>
+
+  <a
+    *ngIf="isLoggedIn"
+    (click)="logout()"
+    class="profile-link logout-link"
+  >
+    Logout
+  </a>
+
+</div>
+
+
+  </div>
+</header>

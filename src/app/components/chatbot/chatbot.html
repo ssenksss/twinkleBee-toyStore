@@ -1,0 +1,47 @@
+<div class="chatbot-toggle" (click)="toggle()">💬</div>
+
+<div class="chat-window" *ngIf="open">
+  <div class="header">
+    TwinkleBot 🐝
+  </div>
+
+  <div class="messages">
+    <div
+      *ngFor="let msg of messages"
+      class="message"
+      [class.user]="msg.from === 'user'"
+      [class.bot]="msg.from === 'bot'"
+    >
+      <div class="text">
+        {{ msg.text }}
+      </div>
+
+      <a
+        *ngIf="msg.action === 'openToy' && msg.toyId"
+        [routerLink]="['/toy', msg.toyId]"
+        class="quick-link"
+        (click)="open = false"
+      >
+        🔍 Otvori detalje
+      </a>
+
+      <a
+        *ngIf="msg.action === 'openCart'"
+        routerLink="/cart"
+        class="quick-link"
+        (click)="open = false"
+      >
+        🛒 Otvori korpu
+      </a>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input
+      placeholder='Napiši: "pretraga" ili "naruci"...'
+      [(ngModel)]="input"
+      (keydown.enter)="send()"
+    />
+    <button (click)="send()">Send</button>
+  </div>
+</div>

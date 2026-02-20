@@ -1,0 +1,62 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+
+    <h2>Create Account</h2>
+    <p class="subtitle">Join TwinkleBee and start your toy adventure 🧸</p>
+
+    <div class="form-group">
+      <input type="text" placeholder="First name" [(ngModel)]="firstName" />
+      <span class="field-error" *ngIf="fieldError.firstName">{{ fieldError.firstName }}</span>
+    </div>
+
+    <div class="form-group">
+      <input type="text" placeholder="Last name" [(ngModel)]="lastName" />
+      <span class="field-error" *ngIf="fieldError.lastName">{{ fieldError.lastName }}</span>
+    </div>
+
+    <div class="form-group">
+      <input type="text" placeholder="Phone" [(ngModel)]="phone" />
+      <span class="field-error" *ngIf="fieldError.phone">{{ fieldError.phone }}</span>
+    </div>
+
+    <div class="form-group">
+      <input type="text" placeholder="Address" [(ngModel)]="address" />
+      <span class="field-error" *ngIf="fieldError.address">{{ fieldError.address }}</span>
+    </div>
+
+    <div class="form-group">
+      <input type="email" placeholder="Email" [(ngModel)]="email" />
+      <span class="field-error" *ngIf="fieldError.email">{{ fieldError.email }}</span>
+    </div>
+
+    <div class="form-group">
+      <input type="password" placeholder="Password" [(ngModel)]="password" />
+      <span class="field-error" *ngIf="fieldError.password">{{ fieldError.password }}</span>
+    </div>
+
+    <div class="form-group">
+      <p style="font-weight:800; margin: 0 0 0.6rem;">Favorite toy types (optional)</p>
+
+      <div style="display:grid; gap:0.5rem;">
+        <label *ngFor="let t of types" style="display:flex; gap:0.6rem; align-items:center;">
+          <input
+            type="checkbox"
+            [checked]="favoriteTypeIds.includes(t.id)"
+            (change)="toggleFavorite(t.id)"
+          />
+          <span>{{ t.label }}</span>
+        </label>
+      </div>
+    </div>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+
+    <button class="btn" (click)="submit()">Create account</button>
+
+    <p class="switch">
+      Already have an account?
+      <a routerLink="/login">Login</a>
+    </p>
+
+  </div>
+</div>

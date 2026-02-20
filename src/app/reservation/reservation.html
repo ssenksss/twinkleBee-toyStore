@@ -1,0 +1,112 @@
+<div class="project-page">
+  <header class="project-header">
+    <h1>Handmade Toy Collection</h1>
+    <p class="project-description">
+      Welcome to our exclusive Handmade Toy Collection! Each toy is crafted with love and care to bring joy to your loved ones.
+    </p>
+  </header>
+
+  <section class="featured-toys">
+    <h2>TwinkleBee Atelier</h2>
+    <div class="toy-cards-container">
+      <div class="toy-card">
+        <img src="public/crochet-bear.png" alt="Crochet Bear" class="toy-image" />
+        <div class="toy-details">
+          <h4>Crochet Bear</h4>
+          <p>A cuddly bear made with soft yarn.</p>
+        </div>
+      </div>
+
+      <div class="toy-card">
+        <img src="public/crochet-bunny.png" alt="Crochet Bunny" class="toy-image" />
+        <div class="toy-details">
+          <h4>Crochet Bunny</h4>
+          <p>An adorable bunny with floppy ears.</p>
+        </div>
+      </div>
+
+      <div class="toy-card">
+        <img src="public/crochet-octopus.webp" alt="Crochet Octopus" class="toy-image" />
+        <div class="toy-details">
+          <h4>Crochet Octopus</h4>
+          <p>A cute little sea creature with curly tentacles.</p>
+        </div>
+      </div>
+
+      <div class="toy-card">
+        <img src="public/crochet-bee.webp" alt="Crochet Bee" class="toy-image" />
+        <div class="toy-details">
+          <h4>Crochet Bee</h4>
+          <p>A buzzing bee with tiny wings.</p>
+        </div>
+      </div>
+
+      <div class="toy-card">
+        <img src="assets/images/crochet-elephant.jpg" alt="Crochet Elephant" class="toy-image" />
+        <div class="toy-details">
+          <h4>Crochet Elephant</h4>
+          <p>A majestic elephant with a long trunk.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="call-to-action">
+  </section>
+
+  <div class="reservation-card">
+    <h2>Toy Reservation</h2>
+    <p class="subtitle">
+      Each TwinkleBee toy is crocheted just for you.
+      Reserve your spot in our workshop!
+    </p>
+
+    <div class="form-horizontal">
+      <select [(ngModel)]="toyType">
+        <option value="">Select Toy Type</option>
+        <option value="Bear">Bear 🐻</option>
+        <option value="Bunny">Bunny 🐰</option>
+        <option value="Bee">Bee 🐝</option>
+        <option value="Custom">Custom Design ✨</option>
+      </select>
+
+      <input
+        type="text"
+        placeholder="Primary Color (e.g. honey yellow)"
+        [(ngModel)]="color"
+      />
+
+      <select [(ngModel)]="size">
+        <option value="">Select Size</option>
+        <option value="Small">Small (15 cm)</option>
+        <option value="Medium">Medium (25 cm)</option>
+        <option value="Large">Large (40 cm)</option>
+      </select>
+
+      <input type="date" [(ngModel)]="date" />
+
+      <textarea
+        placeholder="Special notes (name, accessories, message...)"
+        [(ngModel)]="notes"
+      ></textarea>
+    </div>
+
+    <button (click)="submit()">Reserve Handmade Toy</button>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+    <p class="success" *ngIf="success">{{ success }}</p>
+  </div>
+
+  <div class="reservation-list">
+    <h3>My Handmade Orders</h3>
+
+    <div class="reservation-item" *ngFor="let r of myReservations">
+      <strong>{{ r.toyType }} — {{ r.size }}</strong>
+      <span>Color: {{ r.color }}</span>
+      <span>Ready by: {{ r.date }}</span>
+      <small>Status: {{ r.status }}</small>
+      <em>{{ r.notes || 'No special notes' }}</em>
+    </div>
+  </div>
+
+</div>

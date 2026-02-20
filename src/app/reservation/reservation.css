@@ -1,0 +1,252 @@
+
+.project-page {
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  background: #f9fafb;
+  font-family: 'Inter', sans-serif;
+}
+
+
+.project-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+}
+
+.project-header h1 {
+  font-size: 3.2rem;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.project-description {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+
+.featured-toys {
+  margin-bottom: 4rem;
+}
+
+.featured-toys h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  background: linear-gradient(180deg, #c74f73, #ffb703);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 2rem;
+}
+
+
+.toy-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 2rem;
+}
+
+
+.toy-card {
+  background: white;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(255, 95, 162, 0.15);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.toy-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 25px 60px rgba(255, 183, 3, 0.35);
+}
+
+.toy-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.toy-details {
+  padding: 1rem;
+  text-align: center;
+}
+
+.toy-details h4 {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #374151;
+  margin-bottom: 0.4rem;
+}
+
+.toy-details p {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.reservation-card {
+  max-width: 700px;
+  margin: 0 auto 4rem;
+  background: white;
+  border-radius: 2rem;
+  padding: 3rem;
+  box-shadow: 0 25px 70px rgba(237, 195, 58, 0.2);
+  text-align: center;
+}
+
+.reservation-card h2 {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, #ff5fa2, #ffb703);
+  -webkit-background-clip: text;
+
+}
+
+.subtitle {
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+
+.form-horizontal {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+
+}
+
+
+.form-horizontal textarea {
+  grid-column: span 2;
+}
+
+
+.form-horizontal input,
+.form-horizontal select,
+.form-horizontal textarea {
+  padding: 0.9rem 1.2rem;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 95, 162, 0.3);
+  font-size: 0.85rem;
+  font-weight: 300;
+font-family: inherit;
+  transition: 0.2s ease;
+}
+
+.form-horizontal textarea {
+  border-radius: 1.2rem;
+  min-height: 90px;
+  resize: none;
+}
+
+.form-horizontal input:focus,
+.form-horizontal select:focus,
+.form-horizontal textarea:focus {
+  outline: none;
+  border-color: #ff5fa2;
+  box-shadow: 0 0 0 4px rgba(255, 95, 162, 0.2);
+}
+
+
+.reservation-card button {
+  margin-top: 2rem;
+  width: 100%;
+  background: linear-gradient(135deg, #ff5fa2, #ffb703);
+  border: none;
+  padding: 1rem;
+  border-radius: 999px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 12px 35px rgba(255, 95, 162, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reservation-card button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 55px rgba(255, 183, 3, 0.8);
+}
+
+.error {
+  margin-top: 1rem;
+  color: #ff4d4d;
+  font-weight: 800;
+}
+
+.success {
+  margin-top: 1rem;
+  color: #22c55e;
+  font-weight: 800;
+}
+
+
+.reservation-list {
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 2rem;
+  padding: 2.5rem;
+  box-shadow: 0 25px 60px rgba(255, 183, 3, 0.2);
+}
+
+.reservation-list h3 {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #111827;
+  margin-bottom: 2rem;
+}
+
+
+.reservation-item {
+  background: #fff5fb;
+  border-left: 6px solid #ff5fa2;
+  padding: 1.2rem 1.5rem;
+  border-radius: 1.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: transform 0.15s ease;
+}
+
+.reservation-item:hover {
+  transform: scale(1.03);
+}
+
+.reservation-item strong {
+  color: #ff5fa2;
+  font-size: 0.9rem;
+}
+
+.reservation-item small {
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #7c3aed;
+  text-transform: uppercase;
+}
+
+
+@media (max-width: 768px) {
+  .form-horizontal {
+    grid-template-columns: 1fr;
+  }
+
+  .form-horizontal textarea {
+    grid-column: span 1;
+  }
+
+  .project-header h1 {
+    font-size: 2rem;
+  }
+}
