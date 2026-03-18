@@ -1,4 +1,4 @@
-# 🐝 TwinkleBee – Digital Toy Store UI Prototype
+#  TwinkleBee – Digital Toy Store UI Prototype
 
 TwinkleBee is a high-fidelity interactive prototype of a digital toy store application developed for the Human-Computer Interaction course.
 
@@ -7,7 +7,7 @@ This project implements a front-end prototype only (data is simulated locally, n
 
 ---
 
-## 🎯 Project Objective
+##  Project Objective
 
 The goal of this project is to design and implement an interactive user interface for a digital toy store that enables:
 
@@ -22,9 +22,9 @@ The prototype follows usability heuristics and interaction design principles cov
 
 ---
 
-## 🛍 Core Functionalities
+##  Core Functionalities
 
-### 🔎 Advanced Search
+###  Advanced Search
 
 Users can search toys by:
 
@@ -39,7 +39,7 @@ Users can search toys by:
 
 ---
 
-### 🛒 Reservation System
+###  Reservation System
 
 Users can:
 
@@ -67,7 +67,7 @@ The cart automatically calculates total price.
 
 ---
 
-### 👤 User Authentication & Profile
+###  User Authentication & Profile
 
 The prototype simulates:
 
@@ -79,7 +79,7 @@ Access to reservation cart and checkout requires authentication.
 
 ---
 
-### ⭐ Rating System
+###  Rating System
 
 Users can rate only toys that:
 
@@ -90,7 +90,7 @@ Ratings are visually highlighted and clearly presented.
 
 ---
 
-### 🤖 Conversational Agent (Chatbot)
+###  Conversational Agent (Chatbot)
 
 The application includes a text-based conversational agent that:
 
@@ -113,9 +113,9 @@ The dialogue is implemented as a predefined interaction tree.
 
 ---
 
-## 🌟 Additional Feature
+##  Additional Feature
 
-### 🧶 Handmade Crochet Toy Reservation
+###  Handmade Crochet Toy Reservation
 
 TwinkleBee includes an additional reservation module for homemade crochet toys.
 
@@ -129,7 +129,7 @@ This functionality extends the base project requirements and enhances the overal
 
 ---
 
-## 🛠 Technologies Used
+##  Technologies Used
 
 - Angular  
 - TypeScript  
@@ -139,7 +139,7 @@ This functionality extends the base project requirements and enhances the overal
 
 ---
 
-## 🧠 UX & Design Focus
+##  UX & Design Focus
 
 The prototype emphasizes:
 
@@ -160,7 +160,7 @@ All application data is simulated locally for interaction purposes.
 
 ---
 
-## 👩‍💻 Author
+##  Author
 
 **Ksenija Raković**  
 Software Engineering Student  
