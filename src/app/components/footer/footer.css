@@ -226,3 +226,31 @@
     padding: 2rem;
   }
 }
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #f8cbd6;/* providni krug preko pozadine */
+  transition: 0.25s;
+  overflow: hidden;
+}
+
+.social-icon img {
+  width: 24px;    /* prilagodi veličinu */
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* ovo pretvara sliku u belu ako nije već bela */
+  transition: all 0.25s;
+}
+
+.social-icon:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #ec4899, #f59e0b);
+}
+
+.social-icon:hover img {
+  filter: brightness(1) invert(0); /* hover: vidi originalnu boju loga */
+}
