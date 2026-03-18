@@ -3,7 +3,7 @@
   <div class="checkout-header">
     <div>
       <h1>Checkout</h1>
-      <p>Potvrdi rezervaciju i unesi podatke za isporuku</p>
+      <p>Confirm your reservation and enter delivery information</p>
     </div>
 
     <button class="back-link" (click)="goBack()">← Back to cart</button>
@@ -12,14 +12,14 @@
   <div class="checkout-layout">
 
     <section class="panel">
-      <h2>Delivery info</h2>
+      <h2>Delivery Info</h2>
 
       <div class="form-row">
-        <label>Full name *</label>
+        <label>Full Name *</label>
         <input
           [(ngModel)]="fullName"
           (blur)="touched.fullName = true"
-          placeholder="Ime i prezime"
+          placeholder="First and Last Name"
         />
         <div class="field-error" *ngIf="fullNameError()">{{ fullNameError() }}</div>
       </div>
@@ -27,7 +27,7 @@
       <div class="form-row">
         <label>Email</label>
         <input [value]="email" disabled />
-        <div class="micro">Email se preuzima iz profila (login).</div>
+        <div class="micro">Email is taken from your profile (login).</div>
       </div>
 
       <div class="form-row">
@@ -45,14 +45,14 @@
         <input
           [(ngModel)]="address"
           (blur)="touched.address = true"
-          placeholder="Ulica i broj, grad"
+          placeholder="Street, Number, City"
         />
         <div class="field-error" *ngIf="addressError()">{{ addressError() }}</div>
       </div>
 
       <div class="form-row">
         <label>Note (optional)</label>
-        <textarea [(ngModel)]="note" rows="3" placeholder="Napomena za isporuku..."></textarea>
+        <textarea [(ngModel)]="note" rows="3" placeholder="Delivery note..."></textarea>
       </div>
 
       <div class="divider"></div>
@@ -62,16 +62,16 @@
         <label class="radio">
           <input type="radio" name="outcome" [(ngModel)]="outcome" value="allArrived" />
           <div>
-            <div class="radio-title">Sve pristiglo</div>
-            <div class="radio-sub">Checkout menja sve rezervacije u status <b>pristiglo</b>.</div>
+            <div class="radio-title">All Arrived</div>
+            <div class="radio-sub">Checkout will change all reserved items to <b>arrived</b>.</div>
           </div>
         </label>
 
         <label class="radio">
           <input type="radio" name="outcome" [(ngModel)]="outcome" value="someCanceled" />
           <div>
-            <div class="radio-title">Delimično otkazano</div>
-            <div class="radio-sub">Neke stavke postaju <b>otkazano</b> (da se vide sva 3 statusa).</div>
+            <div class="radio-title">Partially Canceled</div>
+            <div class="radio-sub">Some items will become <b>canceled</b> (so all 3 statuses can be seen).</div>
           </div>
         </label>
       </div>
@@ -80,12 +80,13 @@
       <p class="success" *ngIf="successMsg">{{ successMsg }}</p>
 
       <button class="btn btn-primary" (click)="confirmOrder()" [disabled]="!canSubmit()">
-        Confirm order
+        Confirm Order
       </button>
 
       <p class="tiny">
-        * Ovo je prototip: potvrda menja statuse stavki u korpi. Nakon toga idi u korpu da vidiš badge-eve,
-        i za <b>pristiglo</b> možeš oceniti i obrisati.
+        * This is a prototype: confirming changes item statuses in the cart. <br>
+        Afterwards, go to the cart to see badges,
+        and for <b>arrived</b> items you can rate or remove them.
       </p>
     </section>
 
@@ -93,32 +94,32 @@
       <h2>Summary</h2>
 
       <div *ngIf="items.length === 0" class="empty">
-        <h3>Nema rezervisanih proizvoda</h3>
-        <p>Checkout radi samo za stavke u statusu <b>rezervisano</b>.</p>
-        <a routerLink="/shop" class="btn btn-secondary">Go to shop</a>
+        <h3>No reserved products</h3>
+        <p>Checkout works only for items with <b>reserved</b> status.</p>
+        <a routerLink="/shop" class="btn btn-secondary">Go to Shop</a>
       </div>
 
       <div *ngIf="items.length > 0" class="summary-list">
         <div class="sum-row" *ngFor="let i of items">
           <div class="left">
             <div class="name">{{ i.name }}</div>
-            <div class="meta">{{ i.quantity }} × {{ i.price | currency:'RSD':'symbol':'1.0-0' }}</div>
+            <div class="meta">{{ i.quantity }} × {{ i.price |currency:'USD':'symbol':'1.2-2' }}</div>
           </div>
           <div class="right">
-            {{ (i.quantity * i.price) | currency:'RSD':'symbol':'1.0-0' }}
+            {{ (i.quantity * i.price) | currency:'USD':'symbol':'1.2-2' }}
           </div>
         </div>
 
         <div class="sum-total">
           <span>Total</span>
-          <strong>{{ total | currency:'RSD':'symbol':'1.0-0' }}</strong>
+          <strong>{{ total | currency:'USD':'symbol':'1.2-2' }}</strong>
         </div>
 
         <div class="hint-box">
-          <div class="hint-title">Pravila teme</div>
+          <div class="hint-title">Rules</div>
           <ul>
-            <li>Menjanje količine: samo kad je status <b>rezervisano</b>.</li>
-            <li>Ocenjivanje i brisanje: samo kad je status <b>pristiglo</b>.</li>
+            <li>Quantity changes: only when status is <b>reserved</b>.</li>
+            <li>Rating and removal: only when status is <b>arrived</b>.</li>
           </ul>
         </div>
       </div>

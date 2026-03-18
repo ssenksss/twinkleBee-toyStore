@@ -20,11 +20,11 @@ export interface ToyType {
   label: string;
 }
 
-export type TargetGroup = 'devojcica' | 'decak' | 'svi';
-export type ToyStatus = 'rezervisano' | 'pristiglo' | 'otkazano';
+export type TargetGroup = 'girls' | 'boys' | 'unisex';
+export type ToyStatus = 'reserved' | 'arrived' | 'canceled';
 
 export interface Review {
-  authorType: 'dete' | 'roditelj';
+  authorType: 'child' | 'parent';
   rating: number;
   text: string;
   date: string;

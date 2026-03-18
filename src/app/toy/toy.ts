@@ -47,26 +47,20 @@ export class ToyComponent implements OnInit {
   addToCart() {
     if (!this.auth.isLoggedIn()) {
       localStorage.setItem('tw_to', this.router.url);
-
-      this.toast.show('Please login to reserve toys 🐝');
+      this.toast.show('Please log in to reserve toys 🐝');
       this.router.navigate(['/login']);
       return;
     }
 
     this.cartService.addItem(this.toy, this.quantity);
-    this.toast.show(`${this.toy.name} added to cart 🧸`);
+    this.toast.show(`${this.toy.name} has been added to your cart 🧸`);
   }
-
-
 
   targetGroupLabel(v: Toy['targetGroup']): string {
     switch (v) {
-      case 'devojcica':
-        return 'Devojčica';
-      case 'decak':
-        return 'Dečak';
-      default:
-        return 'Svi';
+      case 'girls': return 'Girls';
+      case 'boys': return 'Boys';
+      default: return 'Unisex';
     }
   }
 

@@ -2,7 +2,9 @@
   <div class="auth-card">
 
     <span class="badge">TwinkleBee Access</span>
-    <h2>Welcome Back 🐝</h2>
+
+    <h2>Welcome Back </h2>
+    <img src="/bee-logo.png" alt="TwinkleBee Logo" class="bee-logo">
     <p class="subtitle">Login to continue your toy adventure</p>
 
     <div class="field">
@@ -16,7 +18,7 @@
         [(ngModel)]="password"
       >
       <button class="toggle" (click)="showPassword = !showPassword">
-        {{ showPassword ? '🙈' : '👁️' }}
+        {{ showPassword ? 'Hide' : 'Show️' }}
       </button>
     </div>
 
@@ -26,12 +28,11 @@
       (click)="submit()"
       [disabled]="loading"
     >
-  <span class="btn-content">
-    <span class="spinner" *ngIf="loading"></span>
-    {{ loading ? 'Redirecting...' : 'Login' }}
-  </span>
+      <span class="btn-content">
+        <span class="spinner" *ngIf="loading"></span>
+        {{ loading ? 'Redirecting...' : 'Login' }}
+      </span>
     </button>
-
 
     <p class="error" *ngIf="error">
       {{ error }}

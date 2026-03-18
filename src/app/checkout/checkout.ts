@@ -18,127 +18,81 @@ type DeliveryOutcome = 'allArrived' | 'someCanceled';
 })
 export class CheckoutComponent implements OnInit {
   user!: User;
-
   items: CartItem[] = [];
-
   fullName = '';
   email = '';
   phone = '';
   address = '';
   note = '';
 
-  touched = {
-    fullName: false,
-    phone: false,
-    address: false
-  };
-
+  touched = { fullName: false, phone: false, address: false };
   outcome: DeliveryOutcome = 'allArrived';
   submitting = false;
-
   errorMsg = '';
   successMsg = '';
   orderId = '';
 
-  constructor(
-    private auth: AuthService,
-    private cart: CartService,
-    private router: Router
-  ) {}
+  constructor(private auth: AuthService, private cart: CartService, private router: Router) {}
 
   ngOnInit() {
     const u = this.auth.getCurrentUser();
-    if (!u) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
+    if (!u) { this.router.navigate(['/login']); return; }
     this.user = u;
-
     this.fullName = `${u.firstName} ${u.lastName}`.trim();
     this.email = u.email ?? '';
     this.phone = (u.phone ?? '').trim();
     this.address = (u.address ?? '').trim();
-
     this.refreshItems();
   }
 
   private refreshItems() {
-    this.items = this.cart.getItems().filter(i => i.status === 'rezervisano');
+    this.items = this.cart.getItems().filter(i => i.status === 'reserved');
   }
 
-  get total() {
-    return this.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
-  }
+  get total() { return this.items.reduce((sum, i) => sum + i.price * i.quantity, 0); }
 
-  private isValidFullName(v: string) {
-    const s = (v ?? '').trim();
-    return s.length >= 3 && s.includes(' ');
-  }
+  private isValidFullName(v: string) { return (v ?? '').trim().length >= 3 && v.includes(' '); }
+  private isValidPhone(v: string) { return /^[+]?[\d\s\-()]{7,20}$/.test((v ?? '').trim()); }
+  private isValidAddress(v: string) { return (v ?? '').trim().length >= 6; }
 
-  private isValidPhone(v: string) {
-    const s = (v ?? '').trim();
-    return /^[+]?[\d\s\-()]{7,20}$/.test(s);
-  }
-
-  private isValidAddress(v: string) {
-    const s = (v ?? '').trim();
-    return s.length >= 6;
-  }
-
-  fullNameError(): string {
+  fullNameError() {
     if (!this.touched.fullName) return '';
-    if (!this.fullName.trim()) return 'Obavezno polje.';
-    if (!this.isValidFullName(this.fullName)) return 'Unesi ime i prezime (npr. "Ksenija Raković").';
+    if (!this.fullName.trim()) return 'Required.';
+    if (!this.isValidFullName(this.fullName)) return 'Enter full name (e.g., "Ksenija Raković").';
     return '';
   }
 
-  phoneError(): string {
+  phoneError() {
     if (!this.touched.phone) return '';
-    if (!this.phone.trim()) return 'Obavezno polje.';
-    if (!this.isValidPhone(this.phone)) return 'Telefon nije u dobrom formatu (npr. +381 64 123 456).';
+    if (!this.phone.trim()) return 'Required.';
+    if (!this.isValidPhone(this.phone)) return 'Invalid phone format (e.g., +381 64 123 456).';
     return '';
   }
 
-  addressError(): string {
+  addressError() {
     if (!this.touched.address) return '';
-    if (!this.address.trim()) return 'Obavezno polje.';
-    if (!this.isValidAddress(this.address)) return 'Adresa je prekratka.';
+    if (!this.address.trim()) return 'Required.';
+    if (!this.isValidAddress(this.address)) return 'Address is too short.';
     return '';
   }
 
   canSubmit(): boolean {
-    return (
-      this.items.length > 0 &&
+    return this.items.length > 0 &&
       this.isValidFullName(this.fullName) &&
       this.isValidPhone(this.phone) &&
       this.isValidAddress(this.address) &&
-      !this.submitting
-    );
+      !this.submitting;
   }
 
   confirmOrder() {
-    this.errorMsg = '';
-    this.successMsg = '';
+    this.errorMsg = ''; this.successMsg = '';
+    this.touched.fullName = true; this.touched.phone = true; this.touched.address = true;
 
-    this.touched.fullName = true;
-    this.touched.phone = true;
-    this.touched.address = true;
-
-    if (this.items.length === 0) {
-      this.errorMsg = 'Nema stavki u statusu "rezervisano". Idi u korpu i dodaj rezervaciju.';
-      return;
-    }
-
-    if (!this.canSubmit()) {
-      this.errorMsg = 'Proveri obavezna polja (ime, telefon, adresa).';
-      return;
-    }
+    if (this.items.length === 0) { this.errorMsg = 'No reserved items in cart.'; return; }
+    if (!this.canSubmit()) { this.errorMsg = 'Check required fields.'; return; }
 
     this.submitting = true;
-
     this.orderId = `TW-${Date.now().toString().slice(-6)}`;
-
     const reserved = [...this.items];
 
     reserved.forEach((item, idx) => {
@@ -147,28 +101,21 @@ export class CheckoutComponent implements OnInit {
     });
 
     this.refreshItems();
-
     this.submitting = false;
 
-    const arrivedCount = reserved.filter((_, idx) => this.computeStatusAfterCheckout(idx, reserved.length) === 'pristiglo').length;
+    const arrivedCount = reserved.filter((_, idx) => this.computeStatusAfterCheckout(idx, reserved.length) === 'arrived').length;
     const canceledCount = reserved.length - arrivedCount;
 
-    this.successMsg =
-      `Porudžbina potvrđena ✅ (Order: ${this.orderId}). ` +
-      `Pristiglo: ${arrivedCount}, Otkazano: ${canceledCount}.`;
+    this.successMsg = `Order confirmed  (Order: ${this.orderId}). Arrived: ${arrivedCount}, Canceled: ${canceledCount}.`;
 
     setTimeout(() => this.router.navigate(['/cart']), 900);
   }
 
   private computeStatusAfterCheckout(index: number, total: number): ToyStatus {
-    if (this.outcome === 'allArrived') return 'pristiglo';
-
-    if (total <= 1) return 'pristiglo';
-
-    return (index % 4 === 3) ? 'otkazano' : 'pristiglo';
+    if (this.outcome === 'allArrived') return 'arrived';
+    if (total <= 1) return 'arrived';
+    return (index % 4 === 3) ? 'canceled' : 'arrived';
   }
 
-  goBack() {
-    this.router.navigate(['/cart']);
-  }
+  goBack() { this.router.navigate(['/cart']); }
 }

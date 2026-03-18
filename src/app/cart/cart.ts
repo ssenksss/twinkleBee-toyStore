@@ -17,9 +17,9 @@ export class CartComponent implements OnInit {
   notice: string | null = null;
 
   statuses: { value: ToyStatus; label: string }[] = [
-    { value: 'rezervisano', label: 'Rezervisano' },
-    { value: 'pristiglo', label: 'Pristiglo' },
-    { value: 'otkazano', label: 'Otkazano' }
+    { value: 'reserved', label: 'Reserved' },
+    { value: 'arrived', label: 'Arrived' },
+    { value: 'canceled', label: 'Canceled' }
   ];
 
   constructor(private cartService: CartService) {}
@@ -30,14 +30,12 @@ export class CartComponent implements OnInit {
 
   private show(msg: string) {
     this.notice = msg;
-    window.setTimeout(() => {
-      this.notice = null;
-    }, 2600);
+    window.setTimeout(() => this.notice = null, 2600);
   }
 
   increase(item: CartItem) {
-    if (item.status !== 'rezervisano') {
-      this.show('Količina se menja samo kada je status "rezervisano".');
+    if (item.status !== 'reserved') {
+      this.show('Quantity can be changed only when status is "reserved".');
       return;
     }
     this.cartService.updateQuantity(item.id, item.quantity + 1);
@@ -45,8 +43,8 @@ export class CartComponent implements OnInit {
   }
 
   decrease(item: CartItem) {
-    if (item.status !== 'rezervisano') {
-      this.show('Količina se menja samo kada je status "rezervisano".');
+    if (item.status !== 'reserved') {
+      this.show('Quantity can be changed only when status is "reserved".');
       return;
     }
     this.cartService.updateQuantity(item.id, item.quantity - 1);
@@ -54,8 +52,8 @@ export class CartComponent implements OnInit {
   }
 
   onQuantityInput(item: CartItem) {
-    if (item.status !== 'rezervisano') {
-      this.show('Količina se menja samo kada je status "rezervisano".');
+    if (item.status !== 'reserved') {
+      this.show('Quantity can be changed only when status is "reserved".');
       return;
     }
     this.cartService.updateQuantity(item.id, item.quantity);
@@ -66,29 +64,29 @@ export class CartComponent implements OnInit {
     this.cartService.updateStatus(item.id, status);
     this.cartItems = this.cartService.getItems();
 
-    if (status !== 'pristiglo') {
-      this.show('Ocena i brisanje su dostupni tek kada je status "pristiglo".');
+    if (status !== 'arrived') {
+      this.show('Rating and removal are only available when status is "arrived".');
     }
   }
 
   remove(item: CartItem) {
-    if (item.status !== 'pristiglo') {
-      this.show('Možeš obrisati samo igračke koje su u statusu "pristiglo".');
+    if (item.status !== 'arrived') {
+      this.show('You can remove only toys that have arrived.');
       return;
     }
     this.cartService.removeItem(item.id);
     this.cartItems = this.cartService.getItems();
-    this.show('Obrisano iz korpe.');
+    this.show('Removed from cart.');
   }
 
   setRating(item: CartItem, rating: number) {
-    if (item.status !== 'pristiglo') {
-      this.show('Možeš oceniti samo igračke koje su "pristiglo".');
+    if (item.status !== 'arrived') {
+      this.show('You can rate only toys that have arrived.');
       return;
     }
     this.cartService.setRating(item.id, rating);
     this.cartItems = this.cartService.getItems();
-    this.show('Hvala na oceni! ⭐');
+    this.show('Thank you for your rating!');
   }
 
   stars(n: number): string {
@@ -105,6 +103,6 @@ export class CartComponent implements OnInit {
   }
 
   canCheckout(): boolean {
-    return this.cartItems.some(i => i.status === 'rezervisano');
+    return this.cartItems.some(i => i.status === 'reserved');
   }
 }

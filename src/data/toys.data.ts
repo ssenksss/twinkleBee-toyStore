@@ -1,12 +1,12 @@
 import { Toy, ToyType } from '../models/toy.model';
 
 export const TOY_TYPES: ToyType[] = [
-  { id: 1, label: 'Slagalica' },
-  { id: 2, label: 'Slikovnica' },
-  { id: 3, label: 'Figura' },
-  { id: 4, label: 'Vozilo' },
-  { id: 5, label: 'Kreativni set' },
-  { id: 6, label: 'Društvena igra' }
+  { id: 1, label: 'Educational Toys' },
+  { id: 2, label: 'Soft Toys' },
+  { id: 3, label: 'Outdoor Fun' },
+  { id: 4, label: 'Creative Sets' },
+  { id: 5, label: 'Baby Toys' },
+  { id: 6, label: 'Games & Puzzles' }
 ];
 
 const t = (id: number) => {
@@ -14,144 +14,156 @@ const t = (id: number) => {
   if (!found) throw new Error(`Unknown toy type id: ${id}`);
   return found;
 };
-
 export const TOYS: Toy[] = [
   {
     id: 1,
-    name: 'Magični Teddy Bear',
-    description: 'Mekana plišana igračka koja umiruje i prati dete u snu.',
-    type: t(3),
+    name: 'Cuddle Bear Plush',
+    description: 'Ultra-soft teddy bear perfect for bedtime comfort and emotional bonding.',
+    type: t(2),
     ageMin: 2,
     ageMax: 6,
-    targetGroup: 'svi',
+    targetGroup: 'unisex',
     manufactureDate: '2024-04-15',
-    price: 1999,
-    image: '/magic-teddy-bear.jpg',
+    price: 19.99,
+    image: '/cuddle-bear.png',
     reviews: [
-      { authorType: 'roditelj', rating: 5, text: 'Predivan i mekan, dete ga ne ispušta.', date: '2025-01-12' },
-      { authorType: 'dete', rating: 4, text: 'Moj meda spava sa mnom!', date: '2025-02-02' }
+      { authorType: 'parent', rating: 5, text: 'Super soft and calming for sleep.', date: '2025-01-12' },
+      { authorType: 'child', rating: 5, text: 'My favorite teddy ever!', date: '2025-02-02' }
     ]
   },
   {
     id: 2,
-    name: 'Kocke za gradnju',
-    description: 'Set od 60 kocki za motoriku i kreativnost.',
+    name: 'Smart Builder Blocks Set',
+    description: 'Colorful building blocks that boost creativity and motor skills.',
     type: t(1),
     ageMin: 3,
     ageMax: 8,
-    targetGroup: 'svi',
+    targetGroup: 'unisex',
     manufactureDate: '2023-11-03',
-    price: 2499,
-    image: '/building%20-blocks-set.png',
+    price: 24.99,
+    image: '/smart-builder-block-set.png',
     reviews: [
-      { authorType: 'roditelj', rating: 5, text: 'Odličan kvalitet, super za razvoj motorike.', date: '2024-12-19' }
+      { authorType: 'parent', rating: 5, text: 'Perfect for development and fun.', date: '2024-12-19' }
     ]
   },
   {
     id: 3,
-    name: 'RC Auto Sprint',
-    description: 'Daljinski upravljač + turbo brzina. Za igru napolju.',
-    type: t(4),
+    name: 'Turbo Racer RC Car',
+    description: 'Fast remote control car designed for outdoor racing fun.',
+    type: t(3),
     ageMin: 6,
     ageMax: 12,
-    targetGroup: 'decak',
+    targetGroup: 'boys',
     manufactureDate: '2024-08-21',
-    price: 3499,
-    image: '/remote-control-ar.png',
+    price: 34.99,
+    image: '/turbo-racer-rc-car.png',
     reviews: [
-      { authorType: 'dete', rating: 5, text: 'Najbrži auto ikad!', date: '2025-03-07' },
-      { authorType: 'roditelj', rating: 4, text: 'Baterija traje solidno, lako se koristi.', date: '2025-03-08' }
+      { authorType: 'child', rating: 5, text: 'Super fast and fun!', date: '2025-03-07' }
     ]
   },
   {
     id: 4,
-    name: 'Kreativni Art Set',
-    description: 'Flomasteri, bojice i nalepnice — sve u jednoj kutiji.',
-    type: t(5),
+    name: 'Creative Art Studio Kit',
+    description: 'All-in-one art kit with crayons, markers, and stickers.',
+    type: t(4),
     ageMin: 5,
     ageMax: 12,
-    targetGroup: 'devojcica',
+    targetGroup: 'girls',
     manufactureDate: '2024-02-10',
-    price: 2999,
-    image: '/Creative%20Art%20Set.jpg',
-    reviews: [{ authorType: 'dete', rating: 5, text: 'Volim nalepnice i boje!', date: '2025-01-28' }]
+    price: 29.99,
+    image: '/creative-art-studio-kit.png',
+    reviews: [
+      { authorType: 'child', rating: 5, text: 'So many colors to play with!', date: '2025-01-28' }
+    ]
   },
   {
     id: 5,
-    name: 'Slikovnica: Mali astronaut',
-    description: 'Ilustrovana priča za laku noć sa kratkim poglavljima.',
-    type: t(2),
+    name: 'My First Storybook',
+    description: 'Beautiful illustrated bedtime book for young readers.',
+    type: t(1),
     ageMin: 3,
     ageMax: 7,
-    targetGroup: 'svi',
+    targetGroup: 'unisex',
     manufactureDate: '2022-09-05',
-    price: 1299,
-    image: 'https://placehold.co/640x480?text=Slikovnica',
-    reviews: [{ authorType: 'roditelj', rating: 4, text: 'Lepa priča, baš za veče.', date: '2024-10-01' }]
+    price: 12.99,
+    image: '/my-first-storybook.png',
+    reviews: [
+      { authorType: 'parent', rating: 4, text: 'Lovely bedtime reading.', date: '2024-10-01' }
+    ]
   },
   {
     id: 6,
-    name: 'Figura: Dino Rex',
-    description: 'Figura dinosaurusa sa pokretnim nogama i repom.',
+    name: 'Dino Explorer Figure',
+    description: 'Realistic dinosaur figure for imaginative play.',
     type: t(3),
     ageMin: 4,
     ageMax: 10,
-    targetGroup: 'svi',
+    targetGroup: 'unisex',
     manufactureDate: '2023-06-12',
-    price: 1599,
-    image: 'https://placehold.co/640x480?text=Figura',
-    reviews: [{ authorType: 'dete', rating: 5, text: 'Rooaaar! Moj dino je najjači.', date: '2025-02-14' }]
+    price: 15.99,
+    image: '/dino-explorer-figure.png',
+    reviews: [
+      { authorType: 'child', rating: 5, text: 'My dino is awesome!', date: '2025-02-14' }
+    ]
   },
   {
     id: 7,
-    name: 'Puzzle 100 delova: More',
-    description: 'Slagalica sa 100 delova, tema more i životinje.',
-    type: t(1),
+    name: 'Ocean Adventure Puzzle',
+    description: '100-piece puzzle featuring sea animals.',
+    type: t(6),
     ageMin: 6,
     ageMax: 12,
-    targetGroup: 'svi',
+    targetGroup: 'unisex',
     manufactureDate: '2024-01-18',
-    price: 999,
-    image: 'https://placehold.co/640x480?text=Puzzle',
-    reviews: [{ authorType: 'roditelj', rating: 4, text: 'Zabavna, ali je potrebno strpljenje.', date: '2025-01-05' }]
+    price: 9.99,
+    image: '/ocean-adventure-puzzle.png',
+    reviews: [
+      { authorType: 'parent', rating: 4, text: 'Fun and educational.', date: '2025-01-05' }
+    ]
   },
   {
     id: 8,
-    name: 'Društvena igra: Brzi Pojmovi',
-    description: 'Igra asocijacija za celu porodicu, 2–6 igrača.',
+    name: 'Family Word Game',
+    description: 'Fun word association game for the whole family.',
     type: t(6),
     ageMin: 8,
     ageMax: 99,
-    targetGroup: 'svi',
+    targetGroup: 'unisex',
     manufactureDate: '2023-12-01',
-    price: 2199,
-    image: 'https://placehold.co/640x480?text=Drustvena+igra',
-    reviews: [{ authorType: 'roditelj', rating: 5, text: 'Smejemo se po sat vremena!', date: '2025-02-20' }]
+    price: 21.99,
+    image: '/family-word-game.png',
+    reviews: [
+      { authorType: 'parent', rating: 5, text: 'We play it every weekend!', date: '2025-02-20' }
+    ]
   },
   {
     id: 9,
-    name: 'Mini kuhinja set',
-    description: 'Pribor i mini namirnice za igru uloga.',
+    name: 'Baby Play Kitchen',
+    description: 'Safe and colorful kitchen set for toddlers.',
     type: t(5),
-    ageMin: 4,
-    ageMax: 9,
-    targetGroup: 'devojcica',
+    ageMin: 2,
+    ageMax: 5,
+    targetGroup: 'girls',
     manufactureDate: '2024-05-30',
-    price: 2799,
-    image: 'https://placehold.co/640x480?text=Set+kuhinja',
-    reviews: [{ authorType: 'dete', rating: 4, text: 'Pravim supu za mamu.', date: '2025-03-11' }]
+    price: 27.99,
+    image: '/baby-play-kitchen.png',
+    reviews: [
+      { authorType: 'child', rating: 4, text: 'I cook for my toys!', date: '2025-03-11' }
+    ]
   },
   {
     id: 10,
-    name: 'Set autića: City Pack',
-    description: '5 metalnih autića različitih boja.',
-    type: t(4),
+    name: 'City Racer Car Pack',
+    description: 'Set of 5 mini cars for endless racing fun.',
+    type: t(3),
     ageMin: 3,
     ageMax: 10,
-    targetGroup: 'decak',
+    targetGroup: 'boys',
     manufactureDate: '2022-12-20',
-    price: 1899,
-    image: 'https://placehold.co/640x480?text=Autici',
-    reviews: [{ authorType: 'roditelj', rating: 4, text: 'Solidan set, dobra izrada.', date: '2024-11-08' }]
+    price: 18.99,
+    image: '/city-racer-car-pack.png',
+    reviews: [
+      { authorType: 'parent', rating: 4, text: 'Good quality set.', date: '2024-11-08' }
+    ]
   }
 ];

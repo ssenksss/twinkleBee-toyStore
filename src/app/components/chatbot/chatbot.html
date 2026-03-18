@@ -2,7 +2,7 @@
 
 <div class="chat-window" *ngIf="open">
   <div class="header">
-    TwinkleBot 🐝
+    TwinkleBot
   </div>
 
   <div class="messages">
@@ -12,9 +12,7 @@
       [class.user]="msg.from === 'user'"
       [class.bot]="msg.from === 'bot'"
     >
-      <div class="text">
-        {{ msg.text }}
-      </div>
+      <div class="text" [innerHTML]="msg.text"></div>
 
       <a
         *ngIf="msg.action === 'openToy' && msg.toyId"
@@ -22,7 +20,7 @@
         class="quick-link"
         (click)="open = false"
       >
-        🔍 Otvori detalje
+        🔍 Open details
       </a>
 
       <a
@@ -31,14 +29,14 @@
         class="quick-link"
         (click)="open = false"
       >
-        🛒 Otvori korpu
+        🛒 Open cart
       </a>
     </div>
   </div>
 
   <div class="input-area">
     <input
-      placeholder='Napiši: "pretraga" ili "naruci"...'
+      placeholder='Type: "search" or "order"...'
       [(ngModel)]="input"
       (keydown.enter)="send()"
     />

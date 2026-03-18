@@ -6,15 +6,20 @@ import { Toy, Review } from 'src/models/toy.model';
 export class ToyService {
 
   private STORAGE_KEY = 'tw_toys';
+  private VERSION_KEY = 'tw_toys_version';
+  private VERSION = 'v2';
 
   constructor() {
     this.seedIfEmpty();
   }
 
+  // ✅ VERSION-BASED SEED
   private seedIfEmpty() {
-    const existing = localStorage.getItem(this.STORAGE_KEY);
-    if (!existing) {
+    const existingVersion = localStorage.getItem(this.VERSION_KEY);
+
+    if (existingVersion !== this.VERSION) {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(TOYS));
+      localStorage.setItem(this.VERSION_KEY, this.VERSION);
     }
   }
 

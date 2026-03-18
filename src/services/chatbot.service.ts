@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToyService } from './toy.service';
 import { CartService } from './cart.service';
-
 import { TargetGroup, Toy } from 'src/models/toy.model';
 
 type ToyType = { id: number; label: string };
@@ -53,6 +52,7 @@ export class ChatbotService {
 
   constructor(private toyService: ToyService, private cart: CartService) {}
 
+
   start(): ChatMessage[] {
     this.state = 'chooseMode';
     this.resetDraft();
@@ -61,15 +61,16 @@ export class ChatbotService {
       {
         from: 'bot',
         text:
-          `Ćao! Ja sam TwinkleBot 🐝\n` +
-          `Mogu da ti pomognem da *pretražiš* igračke ili da *rezervišeš*.\n\n` +
-          `Napiši:\n` +
-          `• "pretraga"\n` +
-          `• "naruci"\n` +
-          `• "reset"`
+          `Hey there! 🌸 I'm Bee 🐝<br>` +
+          `I can help you <b>search</b> for toys or <b>reserve</b> your favorites!<br><br>` +
+          `Type one of these to start:<br>` +
+          `&bull; search<br>` +
+          `&bull; order<br>` +
+          `&bull; reset`
       }
     ];
   }
+
 
   handleUser(textRaw: string): ChatMessage[] {
     const text = (textRaw ?? '').trim();
@@ -77,55 +78,71 @@ export class ChatbotService {
 
     if (lower === 'reset' || lower === 'restart') return this.start();
 
-    if (lower === 'pomoć' || lower === 'pomoc') {
+    if (lower === 'help') {
       return [
         {
           from: 'bot',
           text:
-            `Komande:\n` +
-            `• pretraga\n` +
-            `• naruci\n` +
-            `• reset\n\n` +
-            `Na svim pitanjima možeš da napišeš "preskoci".`
+            `Here’s what I can do for you:<br>` +
+            `&bull; <b>search</b> → Find the perfect toy<br>` +
+            `&bull; <b>order</b> → Reserve a toy you love<br>` +
+            `&bull; <b>reset</b> → Start fresh<br><br>` +
+            `At any step, you can type "skip" to move on.`
         }
       ];
     }
 
-    if (lower === 'otkazi' || lower === 'otkaži' || lower === 'cancel') {
+    if (lower === 'cancel') {
       this.state = 'chooseMode';
       this.resetOrderOnly();
-      return [{ from: 'bot', text: 'Okej — otkazano. Napiši "pretraga" ili "naruci".' }];
+      return [
+        {
+          from: 'bot',
+          text: 'No worries! Your order is canceled.<br>You can type <b>"search"</b> or <b>"order"</b> to continue.'
+        }
+      ];
     }
 
     switch (this.state) {
       case 'chooseMode': {
-        if (lower.includes('pretrag')) {
+        if (lower.includes('search')) {
           this.resetDraft();
           this.state = 'search_name';
-          return [{ from: 'bot', text: 'Unesi ključnu reč za *naziv* (ili "preskoci").' }];
+          return [
+            {
+              from: 'bot',
+              text: 'Yay! Let’s start! Type a keyword for the <b>toy name</b> (or "skip").'
+            }
+          ];
         }
 
-        if (lower.includes('naruc') || lower.includes('naruč')) {
+        if (lower.includes('order')) {
           this.resetOrderOnly();
           this.state = 'order_pick';
           return [
             {
               from: 'bot',
               text:
-                `Order dijalog ✅\n` +
-                `Napiši ID igračke (npr. 3) ili deo naziva.\n` +
-                `Možeš i "otkazi".`
+                `🛒 Ready to reserve! Type the <b>toy ID</b> (like 3) or part of its name.<br>` +
+                `Or type <b>"cancel"</b> if you change your mind.`
             }
           ];
         }
 
-        return [{ from: 'bot', text: 'Napiši "pretraga" ili "naruci".' }];
+        return [
+          { from: 'bot', text: 'Please type <b>"search"</b> or <b>"order"</b> to get started' }
+        ];
       }
 
       case 'search_name': {
         if (!this.isSkip(lower)) this.draft.name = text;
         this.state = 'search_description';
-        return [{ from: 'bot', text: 'Unesi ključnu reč za *opis* (ili "preskoci").' }];
+        return [
+          {
+            from: 'bot',
+            text: 'Now, type a keyword for the <b>description</b> (or "skip").'
+          }
+        ];
       }
 
       case 'search_description': {
@@ -137,7 +154,12 @@ export class ChatbotService {
           .map((t: ToyType) => `${t.id}=${t.label}`)
           .join(', ');
 
-        return [{ from: 'bot', text: `Izaberi *tip* (upiši broj) ili "preskoci".\nTipovi: ${types}` }];
+        return [
+          {
+            from: 'bot',
+            text: `Pick a <b>type</b> (type the number) or "skip". Types: ${types}`
+          }
+        ];
       }
 
       case 'search_type': {
@@ -146,7 +168,7 @@ export class ChatbotService {
           if (!Number.isNaN(n)) this.draft.typeId = n;
         }
         this.state = 'search_age';
-        return [{ from: 'bot', text: 'Unesi uzrast (broj godina, npr. 6) ili "preskoci".' }];
+        return [{ from: 'bot', text: 'Enter <b>age</b> (years, e.g., 6) or "skip".' }];
       }
 
       case 'search_age': {
@@ -155,28 +177,36 @@ export class ChatbotService {
           if (!Number.isNaN(n)) this.draft.age = n;
         }
         this.state = 'search_group';
-        return [{ from: 'bot', text: 'Ciljna grupa: "devojcica", "decak" ili "svi" (ili "preskoci").' }];
+        return [
+          { from: 'bot', text: 'Target group: <b>"girls"</b>, <b>"boys"</b>, or <b>"unisex"</b> (or "skip").' }
+        ];
       }
 
       case 'search_group': {
         if (!this.isSkip(lower)) {
           const g = lower as TargetGroup;
-          if (g === 'devojcica' || g === 'decak' || g === 'svi') this.draft.group = g;
+          if (g === 'girls' || g === 'boys' || g === 'unisex') this.draft.group = g;
         }
         this.state = 'search_mFrom';
-        return [{ from: 'bot', text: 'Datum proizvodnje OD (YYYY-MM-DD) ili "preskoci".' }];
+        return [
+          { from: 'bot', text: 'Manufactured from (YYYY-MM-DD) or "skip".' }
+        ];
       }
 
       case 'search_mFrom': {
         if (!this.isSkip(lower)) this.draft.manufacturedFrom = text;
         this.state = 'search_mTo';
-        return [{ from: 'bot', text: 'Datum proizvodnje DO (YYYY-MM-DD) ili "preskoci".' }];
+        return [
+          { from: 'bot', text: 'Manufactured to (YYYY-MM-DD) or "skip".' }
+        ];
       }
 
       case 'search_mTo': {
         if (!this.isSkip(lower)) this.draft.manufacturedTo = text;
         this.state = 'search_priceMin';
-        return [{ from: 'bot', text: 'Minimalna cena (RSD) ili "preskoci".' }];
+        return [
+          { from: 'bot', text: 'Minimum price (RSD) or "skip".' }
+        ];
       }
 
       case 'search_priceMin': {
@@ -185,7 +215,9 @@ export class ChatbotService {
           if (!Number.isNaN(n)) this.draft.priceMin = n;
         }
         this.state = 'search_priceMax';
-        return [{ from: 'bot', text: 'Maksimalna cena (RSD) ili "preskoci".' }];
+        return [
+          { from: 'bot', text: 'Maximum price (RSD) or "skip".' }
+        ];
       }
 
       case 'search_priceMax': {
@@ -194,13 +226,17 @@ export class ChatbotService {
           if (!Number.isNaN(n)) this.draft.priceMax = n;
         }
         this.state = 'search_reviewText';
-        return [{ from: 'bot', text: 'Recenzije: ključna reč u tekstu recenzije (ili "preskoci").' }];
+        return [
+          { from: 'bot', text: 'Review text keyword (or "skip").' }
+        ];
       }
 
       case 'search_reviewText': {
         if (!this.isSkip(lower)) this.draft.reviewText = text;
         this.state = 'search_minReviewRating';
-        return [{ from: 'bot', text: 'Minimalna ocena recenzije (1-5) ili "preskoci".' }];
+        return [
+          { from: 'bot', text: 'Minimum review rating (1-5) or "skip".' }
+        ];
       }
 
       case 'search_minReviewRating': {
@@ -213,30 +249,36 @@ export class ChatbotService {
         this.state = 'chooseMode';
 
         if (results.length === 0) {
-          return [{ from: 'bot', text: 'Nisam našao ništa 😕 Napiši "pretraga" da pokušamo opet.' }];
+          return [
+            { from: 'bot', text: 'Oh no 😢 I couldn’t find any toys.<br>Try typing <b>"search"</b> to look again!' }
+          ];
         }
 
-        const msgs: ChatMessage[] = [{ from: 'bot', text: `Našao sam ${results.length} rezultata. Evo top 3:` }];
+        const msgs: ChatMessage[] = [
+          { from: 'bot', text: `Yay! 🎉 I found <b>${results.length}</b> toys. Here are the top 3:` }
+        ];
 
         results.slice(0, 3).forEach((t: Toy) => {
           msgs.push({
             from: 'bot',
             text:
-              `• ${t.name}\n` +
-              `Tip: ${t.type.label} · Uzrast: ${t.ageMin}-${t.ageMax} · Grupa: ${t.targetGroup}\n` +
-              `Datum: ${t.manufactureDate} · Cena: ${t.price} RSD · Recenzije: ${t.reviews.length}`,
+              `&bull; <b>${t.name}</b><br>` +
+              `Type: ${t.type.label} · Age: ${t.ageMin}-${t.ageMax} · Group: ${t.targetGroup}<br>` +
+              `Made on: ${t.manufactureDate} · Price: ${t.price} RSD · Reviews: ${t.reviews.length}`,
             toyId: t.id,
             action: 'openToy'
           });
         });
 
-        msgs.push({ from: 'bot', text: 'Ako želiš da rezervišeš neku, napiši "naruci".' });
+        msgs.push({ from: 'bot', text: 'If you want to reserve one, type <b>"order"</b> ' });
         return msgs;
       }
 
       case 'order_pick': {
         const picked = this.pickToy(text);
-        if (!picked) return [{ from: 'bot', text: 'Ne nalazim tu igračku. Probaj ID ili deo naziva.' }];
+        if (!picked) return [
+          { from: 'bot', text: 'I can’t find that toy 😅<br>Try <b>ID</b> or part of its <b>name</b>.' }
+        ];
 
         this.draft.pickedToyId = picked.id;
         this.state = 'order_confirm';
@@ -245,10 +287,10 @@ export class ChatbotService {
           {
             from: 'bot',
             text:
-              `Izabrala si:\n` +
-              `• ${picked.name}\n` +
-              `Cena: ${picked.price} RSD · Tip: ${picked.type.label} · Uzrast: ${picked.ageMin}-${picked.ageMax}\n\n` +
-              `Rezervišemo?\nNapiši: "da" ili "ne" (ili "otkazi").`,
+              `You picked:<br>` +
+              `&bull; <b>${picked.name}</b><br>` +
+              `Price: ${picked.price} RSD · Type: ${picked.type.label} · Age: ${picked.ageMin}-${picked.ageMax}<br><br>` +
+              `Shall we reserve it? Type <b>"yes"</b> or <b>"no"</b> (or <b>"cancel"</b>).`,
             toyId: picked.id,
             action: 'openToy'
           }
@@ -256,18 +298,24 @@ export class ChatbotService {
       }
 
       case 'order_confirm': {
-        if (lower === 'ne' || lower === 'n' || lower === 'no') {
+        if (lower === 'no') {
           this.resetOrderOnly();
           this.state = 'order_pick';
-          return [{ from: 'bot', text: 'Okej. Izaberi drugu igračku (ID ili deo naziva) ili "otkazi".' }];
+          return [
+            { from: 'bot', text: 'Okay  Choose another toy by <b>ID</b> or <b>name</b>, or type <b>"cancel"</b>.' }
+          ];
         }
 
-        if (lower === 'da' || lower === 'd' || lower === 'yes') {
+        if (lower === 'yes') {
           this.state = 'order_qty';
-          return [{ from: 'bot', text: 'Koliko komada? (npr. 1, 2, 3)' }];
+          return [
+            { from: 'bot', text: 'How many would you like? ✨ (e.g., 1, 2, 3)' }
+          ];
         }
 
-        return [{ from: 'bot', text: 'Napiši "da" ili "ne" (ili "otkazi").' }];
+        return [
+          { from: 'bot', text: 'Please type <b>"yes"</b> or <b>"no"</b> (or <b>"cancel"</b>).' }
+        ];
       }
 
       case 'order_qty': {
@@ -278,7 +326,9 @@ export class ChatbotService {
         if (!toy) {
           this.state = 'order_pick';
           this.resetOrderOnly();
-          return [{ from: 'bot', text: 'Ups — ne mogu da nađem igračku. Probaj ponovo: "naruci".' }];
+          return [
+            { from: 'bot', text: 'Oops  I can’t find that toy.<br>Try again: <b>"order"</b>.' }
+          ];
         }
 
         this.cart.addItem(toy, this.draft.qty);
@@ -291,25 +341,25 @@ export class ChatbotService {
           {
             from: 'bot',
             text:
-              `Rezervisano ✅\n` +
-              `• ${toy.name}\n` +
-              `Količina: ${this.draft.qty}\n` +
-              `Ukupno: ${total} RSD\n\n` +
-              `Želiš da otvoriš korpu?`,
+              `Reserved ✅<br>` +
+              `&bull; <b>${toy.name}</b><br>` +
+              `Quantity: ${this.draft.qty}<br>` +
+              `Total: ${total} RSD<br><br>` +
+              `Want to open your cart?`,
             action: 'openCart'
           },
-          { from: 'bot', text: 'Napiši "pretraga" ili "naruci".' }
+          { from: 'bot', text: 'Type <b>"search"</b> or <b>"order"</b> to continue ' }
         ];
       }
 
       default:
         this.state = 'chooseMode';
-        return [{ from: 'bot', text: 'Napiši "pretraga" ili "naruci".' }];
+        return [{ from: 'bot', text: 'Please type "search" or "order" to get started ' }];
     }
   }
 
   private isSkip(lower: string) {
-    return lower === 'preskoci' || lower === 'preskoči' || lower === '-' || lower === 'skip';
+    return lower === 'skip' || lower === '-' || lower === 'skip!';
   }
 
   private resetDraft() {
@@ -348,34 +398,22 @@ export class ChatbotService {
     return this.toyService.getToys().filter((t: Toy) => {
       if (name && !t.name.toLowerCase().includes(name)) return false;
       if (desc && !t.description.toLowerCase().includes(desc)) return false;
-
       if (this.draft.typeId !== null && t.type.id !== this.draft.typeId) return false;
       if (this.draft.group !== null && t.targetGroup !== this.draft.group) return false;
-
-      if (this.draft.age !== null) {
-        if (!(t.ageMin <= this.draft.age && this.draft.age <= t.ageMax)) return false;
-      }
-
+      if (this.draft.age !== null && !(t.ageMin <= this.draft.age && this.draft.age <= t.ageMax)) return false;
       if (from || to) {
         const d = new Date(t.manufactureDate);
         if (from && d < from) return false;
         if (to && d > to) return false;
       }
-
       if (this.draft.priceMin !== null && t.price < this.draft.priceMin) return false;
       if (this.draft.priceMax !== null && t.price > this.draft.priceMax) return false;
-
-      if (reviewText) {
-        const hasText = (t.reviews ?? []).some(r => (r.text ?? '').toLowerCase().includes(reviewText));
-        if (!hasText) return false;
-      }
-
+      if (reviewText && !(t.reviews ?? []).some(r => (r.text ?? '').toLowerCase().includes(reviewText))) return false;
       if (this.draft.minReviewRating !== 'all') {
         const min = Number(this.draft.minReviewRating);
         const ok = (t.reviews ?? []).some(r => (r.rating ?? 0) >= min);
         if (!ok) return false;
       }
-
       return true;
     });
   }

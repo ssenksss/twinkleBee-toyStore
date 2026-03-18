@@ -1,60 +1,87 @@
 <div class="profile-page">
-  <div class="profile-card" *ngIf="user">
+  <h1 class="app-title">My Profile</h1>
 
-    <div class="avatar">
-      {{ user.firstName.charAt(0).toUpperCase() }}
-    </div>
+  <div class="profile-wrapper">
+    <div class="profile-card left-panel" *ngIf="user">
+      <div class="avatar">{{ user.firstName.charAt(0).toUpperCase() }}</div>
 
-    <h2>My Profile</h2>
-    <p class="subtitle">
-      Welcome back, {{ user.firstName }} 🐝
-    </p>
+      <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+      <p class="subtitle">Welcome back </p>
 
-    <div class="info">
-      <p><strong>Email</strong> <span>{{ user.email }}</span></p>
-      <p><strong>Role</strong> <span>{{ user.role }}</span></p>
-    </div>
-
-    <div class="edit">
-      <div class="form-row">
-        <label>First name</label>
-        <input [(ngModel)]="firstName" />
+      <div class="info">
+        <p class="info-card">
+          <span>email :  </span>
+          <strong>{{ user.email }}</strong>
+        </p>
+        <p class="info-card">
+          <span>role : </span>
+          <strong>{{ user.role | lowercase }}</strong>
+        </p>
       </div>
 
-      <div class="form-row">
-        <label>Last name</label>
-        <input [(ngModel)]="lastName" />
-      </div>
-
-      <div class="form-row">
-        <label>Phone</label>
-        <input [(ngModel)]="phone" />
-      </div>
-
-      <div class="form-row">
-        <label>Address</label>
-        <input [(ngModel)]="address" />
-      </div>
-
-      <div class="form-row">
-        <label>Favorite toy types</label>
-
-        <div class="fav-grid">
-          <label *ngFor="let t of types" class="fav-item">
-            <input
-              type="checkbox"
-              [checked]="favoriteTypeIds.includes(t.id)"
-              (change)="toggleFavorite(t.id)"
-            />
-            <span>{{ t.label }}</span>
-          </label>
+      <div class="stats">
+        <div class="stat-item">
+          <h3>12</h3>
+          <p>Orders</p>
+        </div>
+        <div class="stat-item">
+          <h3>5</h3>
+          <p>Favorites</p>
+        </div>
+        <div class="stat-item">
+          <h3>3</h3>
+          <p>Pending</p>
         </div>
       </div>
 
-      <button class="save-btn" (click)="saveProfile()">Save profile</button>
-      <span class="saved" *ngIf="savedMsg">{{ savedMsg }}</span>
+      <div class="progress-wrapper">
+        <p>Order Completion</p>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 75%;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="profile-card right-panel">
+      <div class="edit">
+        <div class="form-row">
+          <label>First name</label>
+          <input [(ngModel)]="firstName" />
+        </div>
 
-      <button class="logout-btn" (click)="logout()">Logout</button>
+        <div class="form-row">
+          <label>Last name</label>
+          <input [(ngModel)]="lastName" />
+        </div>
+
+        <div class="form-row">
+          <label>Phone</label>
+          <input [(ngModel)]="phone" />
+        </div>
+
+        <div class="form-row">
+          <label>Address</label>
+          <input [(ngModel)]="address" />
+        </div>
+
+        <div class="form-row">
+          <label>Favorite toy types</label>
+          <div class="fav-grid">
+            <label *ngFor="let t of types" class="fav-item">
+              <input
+                type="checkbox"
+                [checked]="favoriteTypeIds.includes(t.id)"
+                (change)="toggleFavorite(t.id)"
+              />
+              <span>{{ t.label }}</span>
+            </label>
+          </div>
+        </div>
+
+        <button class="save-btn" (click)="saveProfile()">Save</button>
+        <span class="saved" *ngIf="savedMsg">{{ savedMsg }}</span>
+
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
     </div>
 
   </div>

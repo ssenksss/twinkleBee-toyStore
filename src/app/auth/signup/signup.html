@@ -1,9 +1,15 @@
 <div class="auth-wrapper">
   <div class="auth-card">
 
-    <h2>Create Account</h2>
-    <p class="subtitle">Join TwinkleBee and start your toy adventure 🧸</p>
+    <span class="badge">TwinkleBee Access</span>
 
+    <h2>
+      Create Account
+
+    </h2>
+    <img src="/bee-logo.png" alt="TwinkleBee Logo" class="bee-logo">
+
+    <p class="subtitle">Join TwinkleBee and start your toy adventure </p>
     <div class="form-group">
       <input type="text" placeholder="First name" [(ngModel)]="firstName" />
       <span class="field-error" *ngIf="fieldError.firstName">{{ fieldError.firstName }}</span>
@@ -29,16 +35,15 @@
       <span class="field-error" *ngIf="fieldError.email">{{ fieldError.email }}</span>
     </div>
 
-    <div class="form-group">
+    <div class="form-group password-field">
       <input type="password" placeholder="Password" [(ngModel)]="password" />
       <span class="field-error" *ngIf="fieldError.password">{{ fieldError.password }}</span>
     </div>
 
-    <div class="form-group">
-      <p style="font-weight:800; margin: 0 0 0.6rem;">Favorite toy types (optional)</p>
-
-      <div style="display:grid; gap:0.5rem;">
-        <label *ngFor="let t of types" style="display:flex; gap:0.6rem; align-items:center;">
+    <div class="form-group favorite-types">
+      <p>Favorite toy types (optional)</p>
+      <div class="types-grid">
+        <label *ngFor="let t of types">
           <input
             type="checkbox"
             [checked]="favoriteTypeIds.includes(t.id)"
@@ -50,6 +55,7 @@
     </div>
 
     <p class="error" *ngIf="error">{{ error }}</p>
+
 
     <button class="btn" (click)="submit()">Create account</button>
 

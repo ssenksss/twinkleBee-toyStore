@@ -62,8 +62,9 @@ export class CartService {
       targetGroup: toy.targetGroup,
       manufactureDate: toy.manufactureDate,
       quantity: Math.max(1, Math.floor(quantity || 1)),
-      status: 'rezervisano'
+      status: 'reserved'
     };
+
 
     items.push(newItem);
     this.save(items);
@@ -103,7 +104,7 @@ export class CartService {
       rating,
       text: `User rating (${rating}/5)`,
       date: new Date().toISOString(),
-      authorType: 'roditelj'
+      authorType: 'parent'
     };
 
     this.toyService.addReview(item.toyId, review);
@@ -113,7 +114,7 @@ export class CartService {
 
   getTotal(): number {
     return this.getItems()
-      .filter(i => i.status === 'rezervisano')
+      .filter(i => i.status === 'reserved')
       .reduce((sum, i) => sum + i.price * i.quantity, 0);
   }
 }

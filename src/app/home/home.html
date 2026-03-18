@@ -1,75 +1,95 @@
 <div class="home-page fade-in">
 
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-text">
-          <span class="badge">TwinkleBee ToyLand</span>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <span class="badge">TwinkleBee ToyLand</span>
 
-          <h1>
-            Magical Toys for
-            <span>Curious Minds</span>
-          </h1>
+        <h1>
+          Magical Toys for
+          <span>Curious Minds</span>
+        </h1>
 
-          <p>
-            Discover toys that inspire creativity, learning, and endless fun.
-            Powered by smart search and our friendly AI Bee.
-          </p>
+        <p>
+          Discover toys that inspire creativity, learning, and endless fun.
+          Powered by smart search and our friendly AI Bee.
+        </p>
 
-          <div class="hero-actions">
-            <button class="primary" routerLink="/shop">
-              Shop Now
-            </button>
-
-            <button class="secondary" routerLink="/about">
-              Learn More
-            </button>
-          </div>
-        </div>
-
-        <div class="hero-visual">
-          <img src="assets/hero-toy.png" alt="Toys" />
+        <div class="hero-actions">
+          <button class="primary" routerLink="/shop">Shop Now</button>
+          <button class="secondary" routerLink="/about">Learn More</button>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section">
+  <section class="section section-featured">
+    <div class="section-head">
       <h2 class="section-title">Featured Toys</h2>
+      <p class="section-subtitle">Top picks this week — quick view & one click to details.</p>
+    </div>
 
-      <div class="grid-3">
-        <div class="toy-card" *ngFor="let toy of featuredToys">
-          <img [src]="toy.image" alt="toy" />
+    <div class="grid-3 featured-grid">
+      <div class="toy-card" *ngFor="let toy of featuredToys">
+        <div class="toy-badge">Featured</div>
 
-          <div class="toy-info">
-            <h3>{{ toy.name }}</h3>
-            <p class="price">{{ toy.price | currency }}</p>
+        <div class="toy-media">
+          <img [src]="toy.image" [alt]="toy.name" loading="lazy" />
+        </div>
 
-            <button (click)="goToToy(toy.id)">
-              View Toy
-            </button>
+        <div class="toy-info">
+          <h3>{{ toy.name }}</h3>
+          <p class="price">{{ toy.price | currency }}</p>
+
+          <button class="btn-pill" (click)="goToToy(toy.id)">
+            View Toy
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="promo">
+    <div class="promo-inner">
+      <div class="promo-left">
+        <span class="promo-pill">Weekend discount</span>
+
+        <h2>Limited Time Offer</h2>
+        <p>Save up to <b>30%</b> on selected toys this week only.</p>
+
+        <div class="promo-actions">
+          <button class="promo-btn" routerLink="/shop">Browse deals</button>
+
+          <div class="promo-countdown" aria-label="Countdown">
+            <div class="cd-box"><span class="cd-num">02</span><span class="cd-lbl">Days</span></div>
+            <div class="cd-box"><span class="cd-num">14</span><span class="cd-lbl">Hrs</span></div>
+            <div class="cd-box"><span class="cd-num">52</span><span class="cd-lbl">Min</span></div>
           </div>
         </div>
       </div>
-    </section>
 
-    <section class="promo">
-      <div class="promo-box">
-        <h2>Limited Time Offer 🎉</h2>
-        <p>Save up to 30% on selected toys this week only</p>
+      <div class="promo-right" aria-hidden="true"></div>
+    </div>
+  </section>
 
-        <button routerLink="/shop">
-          Browse Deals
-        </button>
-      </div>
-    </section>
-
-    <section class="section">
+  <section class="section section-categories">
+    <div class="section-head">
       <h2 class="section-title">Shop by Category</h2>
+      <p class="section-subtitle">Pick a category and jump straight to the shop.</p>
+    </div>
 
-      <div class="grid-3">
-        <div class="category-card" *ngFor="let cat of categories">
-          <span>{{ cat }}</span>
-        </div>
+    <div class="grid-3 categories-grid">
+      <div
+        class="category-card"
+        *ngFor="let cat of categories"
+        (click)="goToCategory(cat.typeId)"
+        role="button"
+        tabindex="0"
+      >
+        <span>{{ cat.label }}</span>
+        <small>Explore</small>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </div>
+</div>

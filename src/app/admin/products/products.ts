@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, debounceTime, takeUntil } from 'rxjs';
 
-import { AdminDataService } from '../../../services/admin.data.service';
+import { AdminDataService } from 'src/services/admin.data.service';
 
 interface Product {
   id: number;

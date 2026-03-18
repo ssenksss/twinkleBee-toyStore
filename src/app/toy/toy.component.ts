@@ -9,25 +9,22 @@ import { Toy } from 'src/models/toy.model';
   imports: [CommonModule, RouterModule],
   template: `
     <div class="toy-card">
-
       <div class="image-wrap">
         <img [src]="toy.image" alt="toy" />
-        <span class="category-badge">
-        {{ toy.type?.label }}
-      </span>
+        <span class="category-badge">{{ toy.type.label }}</span>
       </div>
 
       <div class="toy-content">
         <h3>{{ toy.name }}</h3>
 
         <div class="meta">
-          <span>{{ toy.ageMin }}-{{ toy.ageMax }} god.</span>
+          <span>{{ toy.ageMin }}-{{ toy.ageMax }} yrs</span>
           <span class="dot">•</span>
           <span>{{ targetGroupLabel(toy.targetGroup) }}</span>
         </div>
 
         <div class="price">
-          {{ toy.price | currency:'RSD':'symbol':'1.0-0' }}
+          {{ toy.price | currency:'USD':'symbol':'1.2-2' }}
         </div>
 
         <div class="rating" *ngIf="avgRating(toy) as r">
@@ -35,11 +32,10 @@ import { Toy } from 'src/models/toy.model';
           <span class="small">({{ r }}/5)</span>
         </div>
 
-        <a class="view-btn" [routerLink]="['/toy', toy.id]">
+        <a class="btn-pill" [routerLink]="['/toy', toy.id]">
           View Toy
         </a>
       </div>
-
     </div>
   `,
   styleUrls: ['./toy.card.css']
@@ -60,12 +56,9 @@ export class ToyCardComponent {
 
   targetGroupLabel(v: Toy['targetGroup']): string {
     switch (v) {
-      case 'devojcica':
-        return 'Devojčica';
-      case 'decak':
-        return 'Dečak';
-      default:
-        return 'Svi';
+      case 'girls': return 'Girls';
+      case 'boys': return 'Boys';
+      default: return 'Unisex';
     }
   }
 }

@@ -4,7 +4,8 @@
     padding: 1rem;
     font-family: 'Segoe UI', sans-serif;
     background: #fffafc;
-    min-height: 100vh;
+
+  min-height: 100vh;
   }
   body.dark {
     background: #121212;

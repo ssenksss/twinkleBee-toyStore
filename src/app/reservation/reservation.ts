@@ -59,7 +59,7 @@ export class ReservationComponent implements OnInit {
       user.email
     );
 
-    this.success = 'Your handmade toy has been reserved 🧶🐝';
+    this.success = 'Your handmade toy has been reserved';
 
     this.toyType = '';
     this.color = '';
