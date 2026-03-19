@@ -20,10 +20,10 @@ export const routes: Routes = [
 
   { path: 'shop', component: ShopComponent },
 
-  { path: 'cart', component: CartComponent, canActivate: [authGuard] },
+  { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
-  { path: 'reserve', component: ReservationComponent, canActivate: [authGuard] },
+  { path: 'reserve', component: ReservationComponent },
 
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },

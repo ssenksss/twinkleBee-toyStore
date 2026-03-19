@@ -1,72 +1,101 @@
-<div class="profile-page">
-  <h1 class="app-title">My Profile</h1>
-
-  <div class="profile-wrapper">
-    <div class="profile-card left-panel" *ngIf="user">
-      <div class="avatar">{{ user.firstName.charAt(0).toUpperCase() }}</div>
-
-      <h2>{{ user.firstName }} {{ user.lastName }}</h2>
-      <p class="subtitle">Welcome back </p>
-
-      <div class="info">
-        <p class="info-card">
-          <span>email :  </span>
-          <strong>{{ user.email }}</strong>
-        </p>
-        <p class="info-card">
-          <span>role : </span>
-          <strong>{{ user.role | lowercase }}</strong>
-        </p>
-      </div>
-
-      <div class="stats">
-        <div class="stat-item">
-          <h3>12</h3>
-          <p>Orders</p>
-        </div>
-        <div class="stat-item">
-          <h3>5</h3>
-          <p>Favorites</p>
-        </div>
-        <div class="stat-item">
-          <h3>3</h3>
-          <p>Pending</p>
-        </div>
-      </div>
-
-      <div class="progress-wrapper">
-        <p>Order Completion</p>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: 75%;"></div>
-        </div>
-      </div>
+<div class="profile-page" *ngIf="user">
+  <div class="profile-shell">
+    <div class="profile-header">
+      <p class="eyebrow">TwinkleBee account</p>
+      <h1>My Profile</h1>
+      <p class="header-text">
+        Manage your personal details and customize your favorite toy categories.
+      </p>
     </div>
-    <div class="profile-card right-panel">
-      <div class="edit">
-        <div class="form-row">
-          <label>First name</label>
-          <input [(ngModel)]="firstName" />
+
+    <div class="profile-grid">
+      <aside class="profile-card profile-summary">
+        <div class="avatar-wrap">
+          <div class="avatar">{{ initials }}</div>
         </div>
 
-        <div class="form-row">
-          <label>Last name</label>
-          <input [(ngModel)]="lastName" />
+        <div class="summary-main">
+          <h2>{{ fullName }}</h2>
+          <p class="role-badge">{{ user.role }}</p>
         </div>
 
-        <div class="form-row">
-          <label>Phone</label>
-          <input [(ngModel)]="phone" />
+        <div class="summary-info">
+          <div class="summary-row">
+            <span>Email</span>
+            <strong>{{ user.email }}</strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Phone</span>
+            <strong>{{ phone || 'Not added yet' }}</strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Address</span>
+            <strong>{{ address || 'Not added yet' }}</strong>
+          </div>
         </div>
 
-        <div class="form-row">
-          <label>Address</label>
-          <input [(ngModel)]="address" />
+        <div class="summary-block">
+          <div class="block-head">
+            <h3>Favorite categories</h3>
+            <span>{{ favoriteTypeIds.length }}</span>
+          </div>
+
+          <div class="chip-list" *ngIf="favoriteTypesPreview.length; else noFavorites">
+            <span class="chip" *ngFor="let t of favoriteTypesPreview">
+              {{ t.label }}
+            </span>
+          </div>
+
+          <ng-template #noFavorites>
+            <p class="empty-text">You haven’t selected favorite toy categories yet.</p>
+          </ng-template>
         </div>
 
-        <div class="form-row">
-          <label>Favorite toy types</label>
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </aside>
+
+      <section class="profile-card profile-form-card">
+        <div class="form-head">
+          <h3>Edit profile</h3>
+          <p>Keep your details up to date for a smoother shopping experience.</p>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="firstName">First name</label>
+            <input id="firstName" type="text" [(ngModel)]="firstName" />
+          </div>
+
+          <div class="form-row">
+            <label for="lastName">Last name</label>
+            <input id="lastName" type="text" [(ngModel)]="lastName" />
+          </div>
+
+          <div class="form-row">
+            <label for="phone">Phone</label>
+            <input id="phone" type="text" [(ngModel)]="phone" />
+          </div>
+
+          <div class="form-row">
+            <label for="address">Address</label>
+            <input id="address" type="text" [(ngModel)]="address" />
+          </div>
+        </div>
+
+        <div class="favorites-section">
+          <div class="section-head">
+            <h4>Favorite toy types</h4>
+            <p>Select categories you love the most.</p>
+          </div>
+
           <div class="fav-grid">
-            <label *ngFor="let t of types" class="fav-item">
+            <label
+              *ngFor="let t of types"
+              class="fav-item"
+              [class.active]="favoriteTypeIds.includes(t.id)"
+            >
               <input
                 type="checkbox"
                 [checked]="favoriteTypeIds.includes(t.id)"
@@ -77,12 +106,10 @@
           </div>
         </div>
 
-        <button class="save-btn" (click)="saveProfile()">Save</button>
-        <span class="saved" *ngIf="savedMsg">{{ savedMsg }}</span>
-
-        <button class="logout-btn" (click)="logout()">Logout</button>
-      </div>
+        <div class="actions">
+          <button class="save-btn" (click)="saveProfile()">Save changes</button>
+        </div>
+      </section>
     </div>
-
   </div>
 </div>

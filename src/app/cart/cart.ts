@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartItem, CartService } from 'src/services/cart.service';
 import { ToyStatus } from 'src/models/toy.model';
@@ -22,7 +22,7 @@ export class CartComponent implements OnInit {
     { value: 'canceled', label: 'Canceled' }
   ];
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService,  private router: Router) {}
 
   ngOnInit() {
     this.cartItems = this.cartService.getItems();
@@ -104,5 +104,14 @@ export class CartComponent implements OnInit {
 
   canCheckout(): boolean {
     return this.cartItems.some(i => i.status === 'reserved');
+  }
+
+  goToCheckout() {
+    if (!this.canCheckout()) {
+      this.show('You can proceed only if there is at least one reserved item.');
+      return;
+    }
+
+    this.router.navigate(['/checkout']);
   }
 }

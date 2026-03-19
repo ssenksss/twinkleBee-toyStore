@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService, User } from 'src/services/auth.service';
 import { ToyService } from 'src/services/toy.service';
 import { ToyType } from 'src/models/toy.model';
+import { ToastService } from 'src/services/toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +18,6 @@ import { ToyType } from 'src/models/toy.model';
 export class ProfileComponent {
   user!: User;
   types: ToyType[] = [];
-  savedMsg = '';
 
   firstName = '';
   lastName = '';
@@ -28,9 +28,11 @@ export class ProfileComponent {
   constructor(
     private auth: AuthService,
     private toyService: ToyService,
-    private router: Router
+    private router: Router,
+    private toast: ToastService
   ) {
     const u = this.auth.getCurrentUser();
+
     if (!u) {
       this.router.navigate(['/login']);
       return;
@@ -44,6 +46,20 @@ export class ProfileComponent {
     this.phone = u.phone;
     this.address = u.address;
     this.favoriteTypeIds = [...(u.favoriteTypeIds ?? [])];
+  }
+
+  get initials(): string {
+    const first = this.firstName?.trim()?.charAt(0) || this.user?.firstName?.charAt(0) || '';
+    const last = this.lastName?.trim()?.charAt(0) || this.user?.lastName?.charAt(0) || '';
+    return `${first}${last}`.toUpperCase();
+  }
+
+  get fullName(): string {
+    return `${this.firstName} ${this.lastName}`.trim();
+  }
+
+  get favoriteTypesPreview(): ToyType[] {
+    return this.types.filter(t => this.favoriteTypeIds.includes(t.id));
   }
 
   toggleFavorite(typeId: number) {
@@ -63,12 +79,17 @@ export class ProfileComponent {
       favoriteTypeIds: this.favoriteTypeIds
     });
 
-    if (ok) {
-      const refreshed = this.auth.getCurrentUser();
-      if (refreshed) this.user = refreshed;
-      this.savedMsg = 'Saved ✅';
-      setTimeout(() => (this.savedMsg = ''), 1500);
+    if (!ok) {
+      this.toast.show('Profile could not be updated.');
+      return;
     }
+
+    const refreshed = this.auth.getCurrentUser();
+    if (refreshed) {
+      this.user = refreshed;
+    }
+
+    this.toast.show('Profile updated successfully ✨');
   }
 
   logout() {

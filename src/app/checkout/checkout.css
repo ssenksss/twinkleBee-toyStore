@@ -285,3 +285,16 @@
   .checkout-header { flex-direction: column; align-items: flex-start; gap:0.5rem; }
   .summary-list .sum-row { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
 }
+.success {
+  margin: 1rem 0;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid #b7f0d1;
+  background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+  color: #065f46;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-line;
+  box-shadow: 0 10px 24px rgba(16, 185, 129, 0.08);
+}

@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import {CartService} from 'src/services/cart.service';
+import { ToastService } from 'src/services/toast.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
@@ -26,12 +28,22 @@ export class HomeComponent {
     { label: 'Games & Puzzles', typeId: 6 }
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private cartService: CartService,
+    private toast: ToastService
+  ) {}
 
   goToToy(id: number) {
     this.router.navigate(['/toy', id]);
   }
 
+
+  addToCart(toy: any) {
+    this.cartService.addItem(toy);
+
+    this.toast.show(`${toy.name} added to cart!`);
+  }
   goToCategory(typeId: number) {
     this.router.navigate(['/shop'], { queryParams: { typeId } });
   }

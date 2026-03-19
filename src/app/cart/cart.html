@@ -101,9 +101,12 @@
         <span>Total</span>
         <strong>{{ total | currency:'USD':'symbol':'1.2-2' }}</strong>
       </div>
-      <a routerLink="/checkout" class="btn btn-primary checkout-btn" [class.disabledLink]="!canCheckout()" [attr.aria-disabled]="!canCheckout()">
+      <button
+        class="btn btn-primary checkout-btn"
+        [disabled]="!canCheckout()"
+        (click)="goToCheckout()">
         Proceed to Checkout
-      </a>
+      </button>
       <p class="secure">🔒 Secure checkout · SSL protected</p>
       <p class="hint">* Checkout is only possible if there is at least one item with status <b>Reserved</b>.</p>
     </aside>

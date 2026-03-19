@@ -89,8 +89,10 @@ export class CheckoutComponent implements OnInit {
     this.touched.fullName = true; this.touched.phone = true; this.touched.address = true;
 
     if (this.items.length === 0) { this.errorMsg = 'No reserved items in cart.'; return; }
-    if (!this.canSubmit()) { this.errorMsg = 'Check required fields.'; return; }
-
+    if (!this.canSubmit()) {
+      this.errorMsg = 'Please fill in all required fields correctly before confirming the order.';
+      return;
+    }
     this.submitting = true;
     this.orderId = `TW-${Date.now().toString().slice(-6)}`;
     const reserved = [...this.items];
@@ -106,9 +108,13 @@ export class CheckoutComponent implements OnInit {
     const arrivedCount = reserved.filter((_, idx) => this.computeStatusAfterCheckout(idx, reserved.length) === 'arrived').length;
     const canceledCount = reserved.length - arrivedCount;
 
-    this.successMsg = `Order confirmed  (Order: ${this.orderId}). Arrived: ${arrivedCount}, Canceled: ${canceledCount}.`;
+    this.successMsg = `Your order has been successfully placed!
+    Order ID: ${this.orderId}
+    ${arrivedCount} item(s) will arrive soon
+  ${canceledCount} item(s) are currently unavailable
 
-    setTimeout(() => this.router.navigate(['/cart']), 900);
+Thank you for shopping with us!`;
+    setTimeout(() => this.router.navigate(['/cart']), 4500);
   }
 
   private computeStatusAfterCheckout(index: number, total: number): ToyStatus {

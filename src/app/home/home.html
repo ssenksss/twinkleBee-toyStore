@@ -17,8 +17,13 @@
 
         <div class="hero-actions">
           <button class="primary" routerLink="/shop">Shop Now</button>
-          <button class="secondary" routerLink="/about">Learn More</button>
+          <button class="secondary" routerLink="/reserve">Personalize</button>
         </div>
+
+        <p class="hero-note">
+          Looking for something unique? Create your own handmade toy.
+        </p>
+
       </div>
     </div>
   </section>
@@ -33,17 +38,25 @@
       <div class="toy-card" *ngFor="let toy of featuredToys">
         <div class="toy-badge">Featured</div>
 
-        <div class="toy-media">
+        <div class="toy-media" (click)="goToToy(toy.id)">
           <img [src]="toy.image" [alt]="toy.name" loading="lazy" />
         </div>
 
-        <div class="toy-info">
+        <div class="toy-info" (click)="goToToy(toy.id)">
           <h3>{{ toy.name }}</h3>
           <p class="price">{{ toy.price | currency }}</p>
 
-          <button class="btn-pill" (click)="goToToy(toy.id)">
-            View Toy
-          </button>
+
+
+
+          <div class="toy-actions">
+
+
+            <button class="btn-primary" (click)="addToCart(toy); $event.stopPropagation()">
+              Add to Cart
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -59,7 +72,9 @@
 
         <div class="promo-actions">
           <button class="promo-btn" routerLink="/shop">Browse deals</button>
-
+          <button class="promo-btn secondary" routerLink="/reserve">
+            Custom toy
+          </button>
           <div class="promo-countdown" aria-label="Countdown">
             <div class="cd-box"><span class="cd-num">02</span><span class="cd-lbl">Days</span></div>
             <div class="cd-box"><span class="cd-num">14</span><span class="cd-lbl">Hrs</span></div>
@@ -91,5 +106,6 @@
       </div>
     </div>
   </section>
+
 
 </div>

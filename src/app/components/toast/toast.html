@@ -1,3 +1,9 @@
-<div class="toast" *ngIf="toast.visible">
-  {{ toast.message }}
+<div class="toast-container" *ngIf="toast.toasts().length">
+  <div class="toast" *ngFor="let t of toast.toasts(); trackBy: trackById">
+    <span>{{ t.message }}</span>
+
+    <button type="button" class="toast-close" (click)="toast.remove(t.id)" aria-label="Close">
+      ×
+    </button>
+  </div>
 </div>

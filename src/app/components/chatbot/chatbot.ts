@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
+import { ChatbotUiService } from 'src/services/chatbot-ui.service';
 import { ChatbotService, ChatMessage } from 'src/services/chatbot.service';
 
 @Component({
@@ -12,21 +12,30 @@ import { ChatbotService, ChatMessage } from 'src/services/chatbot.service';
   styleUrls: ['./chatbot.css'],
   imports: [CommonModule, FormsModule, RouterModule]
 })
-export class ChatbotComponent {
+export class ChatbotComponent implements OnInit {
   messages: ChatMessage[] = [];
   input = '';
   open = false;
 
-  constructor(private bot: ChatbotService) {
+  constructor(
+    private bot: ChatbotService,
+    public chatbotUi: ChatbotUiService
+  ) {}
+
+  ngOnInit() {
     this.messages = this.bot.start();
+
+    this.chatbotUi.opened$.subscribe(value => {
+      this.open = value;
+
+      if (this.open && this.messages.length === 0) {
+        this.messages = this.bot.start();
+      }
+    });
   }
 
   toggle() {
-    this.open = !this.open;
-
-    if (this.open && this.messages.length === 0) {
-      this.messages = this.bot.start();
-    }
+    this.chatbotUi.toggle();
   }
 
   send() {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToastService } from 'src/services/toast.service';
+import { ToastService, ToastItem } from 'src/services/toast.service';
 
 @Component({
   selector: 'app-toast',
@@ -11,4 +11,8 @@ import { ToastService } from 'src/services/toast.service';
 })
 export class ToastComponent {
   constructor(public toast: ToastService) {}
+
+  trackById(index: number, item: ToastItem) {
+    return item.id;
+  }
 }

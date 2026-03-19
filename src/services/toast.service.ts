@@ -1,17 +1,31 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
+
+export interface ToastItem {
+  id: number;
+  message: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
+  private idCounter = 0;
 
-  message = '';
-  visible = false;
+  toasts = signal<ToastItem[]>([]);
 
-  show(msg: string) {
-    this.message = msg;
-    this.visible = true;
+  show(message: string, duration: number = 2500) {
+    const id = ++this.idCounter;
 
-    setTimeout(() => {
-      this.visible = false;
-    }, 2500);
+    this.toasts.update(current => [...current, { id, message }]);
+
+    window.setTimeout(() => {
+      this.remove(id);
+    }, duration);
+  }
+
+  remove(id: number) {
+    this.toasts.update(current => current.filter(t => t.id !== id));
+  }
+
+  clear() {
+    this.toasts.set([]);
   }
 }

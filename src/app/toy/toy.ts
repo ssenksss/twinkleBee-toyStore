@@ -45,15 +45,8 @@ export class ToyComponent implements OnInit {
   }
 
   addToCart() {
-    if (!this.auth.isLoggedIn()) {
-      localStorage.setItem('tw_to', this.router.url);
-      this.toast.show('Please log in to reserve toys 🐝');
-      this.router.navigate(['/login']);
-      return;
-    }
-
     this.cartService.addItem(this.toy, this.quantity);
-    this.toast.show(`${this.toy.name} has been added to your cart 🧸`);
+    this.toast.show(`${this.toy.name} has been added to your cart!`);
   }
 
   targetGroupLabel(v: Toy['targetGroup']): string {
