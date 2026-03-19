@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { ToyCardComponent } from './toy.component';
 import { CartService } from 'src/services/cart.service';
 import { ToyService } from 'src/services/toy.service';
-import { AuthService } from 'src/services/auth.service';
 import { Toy } from 'src/models/toy.model';
 import { ToastService } from 'src/services/toast.service';
 
@@ -26,8 +25,6 @@ export class ToyComponent implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private toyService: ToyService,
-    private auth: AuthService,
-    private router: Router,
     private toast: ToastService
   ) {}
 
@@ -41,7 +38,7 @@ export class ToyComponent implements OnInit {
     this.relatedToys = this.toyService
       .getToys()
       .filter(t => t.id !== this.toy.id && t.type.id === this.toy.type.id)
-      .slice(0, 2);
+      .slice(0, 3);
   }
 
   addToCart() {
@@ -51,9 +48,12 @@ export class ToyComponent implements OnInit {
 
   targetGroupLabel(v: Toy['targetGroup']): string {
     switch (v) {
-      case 'girls': return 'Girls';
-      case 'boys': return 'Boys';
-      default: return 'Unisex';
+      case 'girls':
+        return 'Girls';
+      case 'boys':
+        return 'Boys';
+      default:
+        return 'Unisex';
     }
   }
 

@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { TOYS, TOY_TYPES } from '../data/toys.data';
-import { Toy, Review } from 'src/models/toy.model';
+import { Review, Toy, ToyType } from 'src/models/toy.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class ToyService {
-
-  private STORAGE_KEY = 'tw_toys';
-  private VERSION_KEY = 'tw_toys_version';
-  private VERSION = 'v2';
+  private readonly STORAGE_KEY = 'tw_toys';
+  private readonly VERSION_KEY = 'tw_toys_version';
+  private readonly VERSION = 'v3';
 
   constructor() {
-    this.seedIfEmpty();
+    this.seedIfNeeded();
   }
 
-  // ✅ VERSION-BASED SEED
-  private seedIfEmpty() {
+  private seedIfNeeded(): void {
     const existingVersion = localStorage.getItem(this.VERSION_KEY);
 
     if (existingVersion !== this.VERSION) {
@@ -23,8 +23,8 @@ export class ToyService {
     }
   }
 
-  private save(t: Toy[]) {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(t));
+  private save(toys: Toy[]): void {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(toys));
   }
 
   getToys(): Toy[] {
@@ -33,16 +33,21 @@ export class ToyService {
   }
 
   getToyById(id: number): Toy | undefined {
-    return this.getToys().find(t => t.id === id);
+    return this.getToys().find(toy => toy.id === id);
   }
 
-  getToyTypes() {
+  getToyTypes(): ToyType[] {
     return TOY_TYPES;
   }
 
-  addReview(toyId: number, review: Review) {
+  getFeaturedToys(limit: number = 3): Toy[] {
+    return this.getToys().slice(0, limit);
+  }
+
+  addReview(toyId: number, review: Review): void {
     const toys = this.getToys();
     const toy = toys.find(t => t.id === toyId);
+
     if (!toy) return;
 
     toy.reviews = toy.reviews || [];

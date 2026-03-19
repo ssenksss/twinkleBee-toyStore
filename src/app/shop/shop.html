@@ -43,9 +43,9 @@
         <label class="label">Target Group</label>
         <select class="select" [(ngModel)]="f.targetGroup">
           <option [ngValue]="'all'">Everyone</option>
-          <option [ngValue]="'devojcica'">Girls</option>
-          <option [ngValue]="'decak'">Boys</option>
-          <option [ngValue]="'svi'">Unisex</option>
+          <option [ngValue]="'girls'">Girls</option>
+          <option [ngValue]="'boys'">Boys</option>
+          <option [ngValue]="'unisex'">Unisex</option>
         </select>
       </div>
 
@@ -57,6 +57,11 @@
       <div class="filter-block">
         <label class="label">Manufactured After</label>
         <input type="date" [(ngModel)]="f.manufacturedFrom" class="search-input" />
+      </div>
+
+      <div class="filter-block">
+        <label class="label">Manufactured Before</label>
+        <input type="date" [(ngModel)]="f.manufacturedTo" class="search-input" />
       </div>
 
       <div class="filter-block">

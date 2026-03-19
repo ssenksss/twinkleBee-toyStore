@@ -7,10 +7,13 @@ export interface Toy {
   ageMin: number;
   ageMax: number;
   targetGroup: TargetGroup;
+
   manufactureDate: string;
   price: number;
   image: string;
+
   reviews: Review[];
+
   status?: ToyStatus;
   userRating?: number;
 }
